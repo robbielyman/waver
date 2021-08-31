@@ -16,7 +16,7 @@ function page:song_view()
   local x_pos = 0
   for _, s in ipairs(track.samples) do
     local height = util.round(math.abs(s) * waveform_height)
-    screen.move(util.linlin(0,128,10,120,x_pos), waveform_pos - height)
+    screen.move(x_pos, waveform_pos - height)
     screen.line_rel(0, 2 * height)
     screen.stroke()
     x_pos = x_pos + 1
@@ -31,7 +31,7 @@ end
 
 function page.init()
   waveform_height = 30
-  waveform_pos = 35
+  waveform_pos = 30
   print("page_init finished")
 end
 

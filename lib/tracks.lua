@@ -15,7 +15,7 @@ function Track:buffer_render()
     softcut.event_render(function(_,_,_,samples) 
         print("track " .. self.id .. " got a callback")
         self.samples = samples end)
-    softcut.render_buffer(1,0,-1,128)
+    softcut.render_buffer(1,0,30,128)
 end
 
 function Track:new(file, level, pan, id)
