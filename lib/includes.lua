@@ -8,3 +8,5 @@ page = include(lib .. "page")
 
 scene = include(lib .. "scene")
 
+counters = include(lib .. "counters")
+
