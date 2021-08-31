@@ -46,7 +46,7 @@ end
 
 function enc(n,d)
     if n == 2 then  
-        fn.active_track(util.clamp(d,1,num_tracks))
+        fn.active_track(util.clamp(fn.active_track() + d,1,num_tracks))
         fn.dirty_screen(true)
     end 
 end
