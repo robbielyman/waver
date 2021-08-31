@@ -25,7 +25,7 @@ function Track:new(file, level, pan, id)
     return t
 end
 
-local working_dir = "waver/data/active"
+local working_dir = _path.dust .. "code/waver/data/active"
 
 function tracks.init()
     fn.dirty_scene(true)
