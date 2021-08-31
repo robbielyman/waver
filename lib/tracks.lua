@@ -11,11 +11,14 @@ Track = {
 
 function Track:buffer_render()
     print("buffer_render() called")
+    callback_inactive = false
     softcut.buffer_clear()
     softcut.buffer_read_mono(self.file,0,0,-1,1,1,0,self.level)
     softcut.event_render(function(_,_,_,samples) 
         print("track " .. self.id .. " got a callback")
-        self.samples = samples end)
+        self.samples = samples 
+        callback_inactive = true
+    end)
     softcut.render_buffer(1,0,30,128)
     fn.dirty_scene(true)
 end
