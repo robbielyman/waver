@@ -7,7 +7,11 @@ function page:song_view()
   screen.level(15)
   screen.text("active track: " .. fn.active_track())
   screen.move(0,45)
-  screen.text("playing: " .. is_playing)
+  if is_playing then    
+      screen.text("playing")
+  else  
+      screen.text("stopped")
+  end
   screen.level(4)
   local x_pos = 0
   for _, s in ipairs(track.samples) do
