@@ -17,8 +17,7 @@ function Track:buffer_render()
 end
 
 function Track:new(file, level, pan, id)
-    local t = {}
-    setmetatable(t, self)
+    local t = setmetatable({}, { __index = Track })
     t.file = file
     t.level = level
     t.pan = pan
