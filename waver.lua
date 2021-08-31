@@ -20,9 +20,9 @@ function init()
     num_tracks = 4
     tracks.init()
     fn.init()
+    active_track = 1
     page.init()
     screen_dirty, scene_dirty = true, true
-    active_track = 1
     redraw()
 end
 
