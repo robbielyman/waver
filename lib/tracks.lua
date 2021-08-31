@@ -5,6 +5,7 @@ Track = {
     level = 1,
     pan = 0,
     id = 0,
+    waiting_for_samples = false,
     samples = {}
 }
 
@@ -16,6 +17,7 @@ function Track:buffer_render()
         print("track " .. self.id .. " got a callback")
         self.samples = samples end)
     softcut.render_buffer(1,0,30,128)
+    fn.dirty_scene(true)
 end
 
 function Track:new(file, level, pan, id)
@@ -24,6 +26,7 @@ function Track:new(file, level, pan, id)
     t.level = level
     t.pan = pan
     t.id = id
+    t.waiting_for_samples = true
     return t
 end
 
@@ -31,12 +34,10 @@ local working_dir = _path.dust .. "code/waver/data/active"
 
 function tracks.init()
     fn.dirty_scene(true)
+    callback_inactive = true
     for i = 1, num_tracks do
         tracks[i] = Track:new(working_dir .. "/track_" .. i ..".wav",1,0,i)
-        tracks[i]:buffer_render()
     end
-    scene:render()
-    print("tracks_init finished")
 end
 
 return tracks

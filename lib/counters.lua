@@ -21,6 +21,11 @@ function counters.sceneminder()
     if counters.transport ~= nil then   
         counters.transport.frame = counters.transport.frame + 1 
     end 
+    for _, track in ipairs(tracks) do   
+        if track.waiting_for_samples and callback_inactive then 
+            track:buffer_render()
+        end
+    end
     redraw_scene()
 end
 
