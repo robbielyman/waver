@@ -36,9 +36,17 @@ function init()
     fn.init()
     active_track = 1
     page.init()
+    counters.init()
     fn.dirty_screen(true)
     fn.dirty_scene(true)
     redraw()
     redraw_scene()
     print("init finished")
+end
+
+function enc(n,d)
+    if n == 2 then  
+        fn.active_track(util.clamp(d,1,num_tracks))
+        fn.dirty_screen(true)
+    end 
 end
