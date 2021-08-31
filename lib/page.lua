@@ -12,6 +12,7 @@ function page:song_view()
     screen.stroke()
     x_pos = x_pos + 1
   end
+  screen.update()
 end
 
 
