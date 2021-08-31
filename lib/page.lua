@@ -1,14 +1,5 @@
 page = {}
 
-function page.init()
-  waveform_height = 30
-  waveform_pos = 35
-end
-
-function page:render()
-  page:song_view()
-end
-
 function page:song_view()
   screen.clear()
   local track = tracks[active_track]
@@ -23,5 +14,15 @@ function page:song_view()
   end
 end
 
+
+function page:render()
+  page:song_view()
+end
+
+function page.init()
+  waveform_height = 30
+  waveform_pos = 35
+  page:render()
+end
 
 return page

@@ -24,7 +24,6 @@ function init()
     screen_dirty, scene_dirty = true, true
     active_track = 1
     redraw()
-    redraw_scene()
 end
 
 function redraw()
