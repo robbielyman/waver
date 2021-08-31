@@ -42,7 +42,7 @@ function scene:render()
             local right = track.level * math.cos(theta)
             print("left: " .. left .. "\tright: " .. right)
             softcut.buffer_read_mono(track.file, 0, 0, 30, 1, 1, 1, left)
-            softcut.buffer_read_mono(track.file, 0, 0, 30, 1, 1, 1, right)
+            softcut.buffer_read_mono(track.file, 0, 0, 30, 1, 2, 1, right)
         end
         softcut.pan(1,-1)
         softcut.pan(2,1)
