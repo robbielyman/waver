@@ -19,7 +19,6 @@ function redraw()
     if not fn.dirty_screen() then return end
     page:render()
     fn.dirty_screen(false)
-    print("redrawing")
 end
 
 function redraw_scene()
@@ -49,4 +48,11 @@ function enc(n,d)
         fn.active_track(util.clamp(fn.active_track() + d,1,num_tracks))
         fn.dirty_screen(true)
     end 
+end
+
+function key(n,z)
+    if n == 2 then
+        fn.toggle_playback()
+        fn.dirty_scene(true)
+    end
 end

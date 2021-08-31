@@ -6,6 +6,8 @@ function page:song_view()
   screen.move(0,40)
   screen.level(15)
   screen.text("active track: " .. fn.active_track())
+  screen.move(0,45)
+  screen.text("playing: " .. is_playing)
   screen.level(4)
   local x_pos = 0
   for _, s in ipairs(track.samples) do

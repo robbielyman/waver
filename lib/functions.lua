@@ -22,4 +22,12 @@ function fn.active_track(track)
     return active_track
 end
 
+function fn.toggle_playback()
+    if is_playing == true then  
+        is_playing == false 
+    else    
+        is_playing == true
+    end
+end
+
 return fn

@@ -7,8 +7,8 @@ function counters.init()
 end
 
 function counters.screenminder()
-    if counters.ui ~= nil then  
-        counters.ui.frame = counters.ui.frame + 1   
+    if counters.ui ~= nil then
+        counters.ui.frame = counters.ui.frame + 1
     end
     redraw()
 end

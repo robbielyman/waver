@@ -27,6 +27,7 @@ function scene.init()
     for i = 3, 6 do
         softcut.enable(i, 0)
     end
+    is_playing = false
     print("scene_init finished")
 end
 
