@@ -21,8 +21,10 @@ function init()
     tracks.init()
     fn.init()
     page.init()
-    screen_dirty, scene_dirty = false, false
+    screen_dirty, scene_dirty = true, true
     active_track = 1
+    redraw()
+    redraw_scene()
 end
 
 function redraw()
