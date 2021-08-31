@@ -5,7 +5,7 @@ Track = {
     level = 1,
     pan = 0,
     id = 0,
-    samples = nil
+    samples = {}
 }
 
 function Track:new(file, level, pan, id)

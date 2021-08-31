@@ -7,9 +7,11 @@
 -- v0.1
 
 -- TODO: remove these before pushing!
-softcut = {}
-audio = {}
-include = require
+-- softcut = {}
+-- screen = {}
+-- audio = {}
+-- util = {}
+-- include = require
 
 include("waver/lib/includes")
 
