@@ -17,6 +17,7 @@ function Track:buffer_render()
     softcut.event_render(function(_,_,_,samples) 
         print("track " .. self.id .. " got a callback")
         self.samples = samples 
+        self.waiting_for_samples = false
         callback_inactive = true
     end)
     softcut.render_buffer(1,0,30,128)
