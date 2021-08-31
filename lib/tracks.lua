@@ -9,9 +9,12 @@ Track = {
 }
 
 function Track:buffer_render()
+    print("buffer_render() called")
     softcut.buffer_clear()
     softcut.buffer_read_mono(self.file,0,0,-1,1,1,0,self.level)
-    softcut.event_render(function(_,_,_,samples) self.samples = samples end)
+    softcut.event_render(function(_,_,_,samples) 
+        print("track " .. self.id .. " got a callback")
+        self.samples = samples end)
     softcut.render_buffer(1,0,-1,128)
 end
 
@@ -21,7 +24,6 @@ function Track:new(file, level, pan, id)
     t.level = level
     t.pan = pan
     t.id = id
-    t:buffer_render()
     return t
 end
 
@@ -31,6 +33,7 @@ function tracks.init()
     fn.dirty_scene(true)
     for i = 1, num_tracks do
         tracks[i] = Track:new(working_dir .. "/track_" .. i ..".wav",1,0,i)
+        tracks[i]:buffer_render()
     end
     scene:render()
     print("tracks_init finished")
