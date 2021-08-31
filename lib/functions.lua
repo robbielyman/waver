@@ -24,9 +24,9 @@ end
 
 function fn.toggle_playback()
     if is_playing == true then  
-        is_playing == false 
+        is_playing = false 
     else    
-        is_playing == true
+        is_playing = true
     end
 end
 
