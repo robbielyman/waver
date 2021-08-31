@@ -1,6 +1,7 @@
 fn = {}
 
 function fn.init()
+    print("functions_init finished")
 end
 
 function fn.dirty_screen(bool)

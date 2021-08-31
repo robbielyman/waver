@@ -25,6 +25,7 @@ function scene.init()
     for i = 3, 6 do
         softcut.enable(i, 0)
     end
+    print("scene_init finished")
 end
 
 function scene:render()

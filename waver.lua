@@ -15,6 +15,20 @@
 
 include("waver/lib/includes")
 
+function redraw()
+    if not fn.dirty_screen() then return end
+    page:render()
+    fn.dirty_screen(false)
+    print("redrawing")
+end
+
+function redraw_scene()
+    if not fn.dirty_scene() then return end
+    scene:render()
+    fn.dirty_scene(false)
+    print("redrawing scene")
+end
+
 function init()
     scene.init()
     num_tracks = 4
@@ -24,16 +38,5 @@ function init()
     page.init()
     screen_dirty, scene_dirty = true, true
     redraw()
-end
-
-function redraw()
-    if not fn.dirty_screen() then return end
-    page:render()
-    fn.dirty_screen(false)
-end
-
-function redraw_scene()
-    if not fn.dirty_scene() then return end
-    scene:render()
-    fn.dirty_scene(false)
+    print("init finished")
 end

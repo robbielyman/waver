@@ -1,9 +1,8 @@
 local lib = "waver/lib/"
 
+fn = include(lib .. "functions")
 -- manage track data
 tracks = include(lib .. "tracks")
-
-fn = include(lib .. "functions")
 
 page = include(lib .. "page")
 

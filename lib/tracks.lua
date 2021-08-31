@@ -33,6 +33,7 @@ function tracks.init()
         tracks[i] = Track:new(working_dir .. "/track_" .. i ..".wav",1,0,i)
     end
     scene:render()
+    print("tracks_init finished")
 end
 
 return tracks
