@@ -31,6 +31,7 @@ function scene.init()
 end
 
 function scene:render()
+    print("scene:render() called")
     if is_playing == true then  
         softcut.buffer_clear()
         for _, track in ipairs(tracks) do   
