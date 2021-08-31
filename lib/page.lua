@@ -2,7 +2,7 @@ page = {}
 
 function page:song_view()
   screen.clear()
-  local track = tracks[active_track]
+  local track = tracks[fn.active_track()]
   screen.move(0,40)
   screen.level(15)
   screen.text("active track: " .. fn.active_track())
@@ -31,7 +31,7 @@ end
 
 function page.init()
   waveform_height = 30
-  waveform_pos = 30
+  waveform_pos = 20
   print("page_init finished")
 end
 
