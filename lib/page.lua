@@ -6,7 +6,7 @@ function page:song_view()
   screen.move(0,40)
   screen.level(15)
   screen.text("active track: " .. fn.active_track())
-  screen.move(0,45)
+  screen.move(0,46)
   if is_playing then    
       screen.text("playing")
   else  

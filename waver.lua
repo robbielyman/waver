@@ -54,5 +54,6 @@ function key(n,z)
     if n == 2 then
         fn.toggle_playback()
         fn.dirty_scene(true)
+        fn.dirty_screen(true)
     end
 end

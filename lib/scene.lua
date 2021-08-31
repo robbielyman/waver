@@ -42,8 +42,8 @@ function scene:render()
     end
     softcut.pan(1,-1)
     softcut.pan(2,1)
-    softcut.play(1,1)
-    softcut.play(2,1)
+    softcut.play(1,is_playing and 1 or 0)
+    softcut.play(2,is_playing and 1 or 0)
     fn.dirty_scene(false)
 end
 
