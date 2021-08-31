@@ -17,11 +17,11 @@ include("waver/lib/includes")
 
 function init()
     scene.init()
+    num_tracks = 4
     tracks.init()
     fn.init()
     page.init()
     screen_dirty, scene_dirty = false, false
-    num_tracks = 4
     active_track = 1
 end
 
