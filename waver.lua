@@ -36,7 +36,8 @@ function init()
     fn.init()
     active_track = 1
     page.init()
-    screen_dirty, scene_dirty = true, true
+    fn.dirty_screen(true)
+    fn.dirty_scene(true)
     redraw()
     redraw_scene()
     print("init finished")
