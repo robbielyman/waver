@@ -51,7 +51,7 @@ function enc(n,d)
 end
 
 function key(n,z)
-    if n == 2 then
+    if n == 2 and z == 1 then
         fn.toggle_playback()
         fn.dirty_scene(true)
         fn.dirty_screen(true)
