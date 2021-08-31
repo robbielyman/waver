@@ -32,7 +32,9 @@ function tracks.init()
     fn.dirty_scene(true)
     for i = 1, num_tracks do
         tracks[i] = Track:new(working_dir .. "/track_" .. i ..".wav",1,0,i)
-        tracks[i]:buffer_render()
+    end
+    for _, track in tracks do   
+        track:buffer_render()
     end
     scene:render()
 end
