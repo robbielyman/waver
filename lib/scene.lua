@@ -32,16 +32,20 @@ function scene.init()
 end
 
 function scene:render()
-    softcut.buffer_clear()
-    for i = 1, num_tracks do
-        local theta = math.pi/4 * (tracks[i].pan + 1)
-        softcut.buffer_read_mono(tracks[i].file, 0, 0, -1, 1, 1, 1,
-            tracks[i].level*math.cos(theta))
-        softcut.buffer_read_mono(tracks[i].file, 0, 0, -1, 1, 2, 1,
-            tracks[i].level*math.sin(theta))
+    if is_playing == true then  
+        softcut.buffer_clear()
+        for _, track in ipairs(tracks) do   
+            local theta = math.pi/4 * (track.pan + 1)
+            print("theta for track " .. track.id .. " = " .. theta)
+            local left = track.level * math.cos(theta)
+            local right = track.level * math.cos(theta)
+            print("left: " .. left .. "\tright: " .. right)
+            softcut.buffer_read_mono(track.file, 0, 0, 30, 1, 1, 1, left)
+            softcut.buffer_read_mono(track.file, 0, 0, 30, 1, 1, 1, right)
+        end
+        softcut.pan(1,-1)
+        softcut.pan(2,1)
     end
-    softcut.pan(1,-1)
-    softcut.pan(2,1)
     softcut.play(1,is_playing and 1 or 0)
     softcut.play(2,is_playing and 1 or 0)
     fn.dirty_scene(false)
