@@ -38,5 +38,6 @@ function init()
     page.init()
     screen_dirty, scene_dirty = true, true
     redraw()
+    redraw_scene()
     print("init finished")
 end
