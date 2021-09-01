@@ -16,9 +16,9 @@ function Track:buffer_render()
     softcut.buffer_read_mono(self.file,0,0,-1,1,1,0,self.level)
     softcut.event_render(function(_,_,_,samples) 
         if not callback_inactive then
-            print("track " .. self.id .. " got a callback")
-            self.samples = samples 
+            self.samples = samples
             self.waiting_for_samples = false
+            fn.dirty_scene(true)
             callback_inactive = true
         end
     end)

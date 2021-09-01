@@ -1,4 +1,4 @@
-scene = { state = "normal" }
+scene = {} 
 
 require("math")
 
@@ -27,11 +27,9 @@ function scene.init()
         softcut.enable(i, 0)
     end
     is_playing = false
-    print("scene_init finished")
 end
 
 function scene:render()
-    print("scene:render() called")
     if is_playing == true then  
         softcut.buffer_clear()
         for _, track in ipairs(tracks) do   
@@ -46,7 +44,7 @@ function scene:render()
     end
     softcut.play(1,is_playing and 1 or 0)
     softcut.play(2,is_playing and 1 or 0)
-    softcut.voice_sync(1,2,0)
+--    softcut.voice_sync(1,2,0)
     fn.dirty_scene(false)
 end
 
