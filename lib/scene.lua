@@ -35,7 +35,7 @@ function scene:render()
         for _, track in ipairs(tracks) do   
             local theta = math.pi/4 * (track.pan + 1)
             local left = track.level * math.cos(theta)
-            local right = track.level * math.cos(theta)
+            local right = track.level * math.sin(theta)
             softcut.buffer_read_mono(track.file, 0, 0, 30, 1, 1, 1, left)
             softcut.buffer_read_mono(track.file, 0, 0, 30, 1, 2, 1, right)
         end
