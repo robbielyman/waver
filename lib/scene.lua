@@ -44,7 +44,6 @@ function scene:render()
     end
     softcut.play(1,is_playing and 1 or 0)
     softcut.play(2,is_playing and 1 or 0)
-    softcut.voice_sync(1,2,0)
     fn.dirty_scene(false)
 end
 
