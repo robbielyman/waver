@@ -12,6 +12,8 @@ function page:song_view()
   else  
       screen.text("stopped")
   end
+  screen.move(0,52)
+  screen.text("pan: " .. track.pan)
   screen.level(4)
   local x_pos = 0
   for _, s in ipairs(track.samples) do

@@ -47,7 +47,13 @@ function enc(n,d)
     if n == 2 then  
         fn.active_track(util.clamp(fn.active_track() + d,1,num_tracks))
         fn.dirty_screen(true)
-    end 
+    end
+    if n == 3 then
+        local track = tracks[fn.active_track()]
+        track.pan = util.clamp(track.pan + d/100, -1,1)
+        fn.dirty_scene(true)
+        fn.dirty_screen(true)
+    end
 end
 
 function key(n,z)
