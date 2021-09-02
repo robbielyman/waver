@@ -15,19 +15,6 @@
 
 include("waver/lib/includes")
 
-function redraw()
-    if not fn.dirty_screen() then return end
-    page:render()
-    fn.dirty_screen(false)
-end
-
-function redraw_scene()
-    if not fn.dirty_scene() then return end
-    scene:render()
-    fn.dirty_scene(false)
-    print("redrawing scene")
-end
-
 function init()
     scene.init()
     num_tracks = 4
@@ -36,10 +23,7 @@ function init()
     active_track = 1
     page.init()
     counters.init()
-    fn.dirty_screen(true)
-    fn.dirty_scene(true)
-    redraw()
-    redraw_scene()
+    redraw_clock_id = clock.run(counters.redraw_clock)
     print("init finished")
 end
 
@@ -62,4 +46,16 @@ function key(n,z)
         fn.dirty_scene(true)
     end
     fn.dirty_screen(true)
+end
+
+function redraw()
+    if not fn.dirty_screen() then return end
+    page:render()
+    fn.dirty_screen(false)
+end
+
+function redraw_scene()
+    if not fn.dirty_scene() then return end
+    scene:render()
+    fn.dirty_scene(false)
 end
