@@ -61,5 +61,5 @@ function key(n,z)
         fn.toggle_playback()
         fn.dirty_scene(true)
     end
-    fn.dirty_scene(true)
+    fn.dirty_screen(true)
 end
