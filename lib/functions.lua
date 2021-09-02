@@ -30,4 +30,12 @@ function fn.toggle_playback()
     end
 end
 
+function rerun()
+  norns.script.load(norns.state.script)
+end
+
+function r()
+    rerun()
+end
+
 return fn
