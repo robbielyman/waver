@@ -3,7 +3,7 @@ counters = {}
 function counters.init()
     counters.ui = metro.init(counters.screenminder,1/15)
     counters.ui.frame = 1
-    counters.fps = 15
+    counters.ui.fps = 15
     counters.ui:start()
 
     counters.transport = metro.init(counters.sceneminder,1/5)
@@ -39,7 +39,7 @@ function counters.redraw_clock()
       redraw()
       fn.dirty_screen(false)
     end
-    clock.sleep(1 / counters.fps)
+    clock.sleep(1 / counters.ui.fps)
   end
 end
 
