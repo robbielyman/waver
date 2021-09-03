@@ -1,29 +1,15 @@
 page = {}
 
 function page:song_view()
-  screen.clear()
-  local track = tracks[fn.active_track()]
-  screen.move(0,40)
-  screen.level(15)
-  screen.text("active track: " .. fn.active_track())
-  screen.move(0,46)
-  if is_playing then    
-      screen.text("playing")
-  else  
-      screen.text("stopped")
-  end
-  screen.move(0,52)
-  screen.text("pan: " .. track.pan)
-  screen.level(4)
+    graphics:setup()  
+    local track = tracks[fn.active_track()]
   local x_pos = 0
   for _, s in ipairs(track.samples) do
     local height = util.round(math.abs(s) * waveform_height)
-    screen.move(x_pos, waveform_pos - height)
-    screen.line_rel(0, 2 * height)
-    screen.stroke()
+    graphics:mlrs(x_pos, waveform_pos - height, 0, 2*height, 4)
     x_pos = x_pos + 1
   end
-  screen.update()
+  graphics:teardown()
 end
 
 

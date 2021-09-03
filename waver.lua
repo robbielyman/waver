@@ -6,11 +6,12 @@
 -- @alanza
 -- v0.1
 
--- TODO: remove these before pushing!
+-- TODO: comment these before pushing!
 -- softcut = {}
 -- screen = {}
 -- audio = {}
 -- util = {}
+-- metro = {}
 -- include = require
 
 include("waver/lib/includes")

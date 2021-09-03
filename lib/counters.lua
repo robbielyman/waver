@@ -7,7 +7,7 @@ function counters.init()
     counters.ui:start()
 
     counters.transport = metro.init(counters.sceneminder,1/5)
-    counters.transport.frame = 1    
+    counters.transport.frame = 1
     counters.transport:start()
 end
 
