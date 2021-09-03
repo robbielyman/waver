@@ -12,7 +12,7 @@ function counters.init()
 end
 
 function counters.screenminder()
-    if counters.ui ~= nil then
+    if counters.ui ~= nil and fn.playing() then
         counters.ui.frame = counters.ui.frame + 1
     end
     fn.dirty_screen(true)
