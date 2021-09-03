@@ -10,7 +10,7 @@ function page:song_view()
             graphics:mlrs(x_pos, y_pos - height, 0, 2*height, i == fn.active_track() and 8 or 4)
             x_pos = x_pos + 1
         end
-        y_pos = y_pos + waveform_height + 6 and i == fn.active_track() or 1
+        y_pos = y_pos + waveform_height
     end
     graphics:teardown()
 end
