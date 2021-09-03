@@ -19,6 +19,8 @@ include("waver/lib/includes")
 function init()
     scene.init()
     num_tracks = 4
+    is_looping = true
+    loop_length = 30
     tracks.init()
     fn.init()
     active_track = 1
