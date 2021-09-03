@@ -3,7 +3,8 @@ page = {}
 function page:song_view()
     graphics:setup()
     local y_pos = waveform_pos
-    for i, track in ipairs(tracks) do
+    for i in 1, num_tracks do
+        local track = tracks[i]
         local x_pos = 0
         for _, s in ipairs(track.samples) do
             local height = util.round(math.abs(s) * waveform_height)
