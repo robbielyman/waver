@@ -10,6 +10,7 @@ Track = {
 }
 
 function Track:buffer_render()
+    print("buffer_render() called for track: " .. self.id)
     callback_inactive = false
     softcut.buffer_clear()
     softcut.buffer_read_mono(self.file,0,0,-1,1,1,0,self.level)
