@@ -30,7 +30,7 @@ function fn.toggle_playback()
     end
 end
 
-function playing(bool)
+function fn.playing(bool)
     if bool == nil then return is_playing end
     is_playing = bool
     return is_playing
