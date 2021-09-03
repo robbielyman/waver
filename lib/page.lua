@@ -5,7 +5,7 @@ function page:song_view()
     local y_pos = 0
     for i, track in ipairs(tracks) do
         local x_pos = 0
-        y_pos = y_pos + waveform_height * (i == fn.active_track() and 2 or 1)
+        y_pos = y_pos + waveform_height
         for _, s in ipairs(track.samples) do
             local height = util.round(math.abs(s) * waveform_height *
                 (i == fn.active_track() and 2 or 1))
