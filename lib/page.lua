@@ -3,7 +3,7 @@ page = {}
 function page:song_view()
     graphics:setup()
     local y_pos = waveform_pos
-    for i in 1, num_tracks do
+    for i = 1, num_tracks do
         local track = tracks[i]
         local x_pos = 0
         for _, s in ipairs(track.samples) do
