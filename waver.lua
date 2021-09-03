@@ -60,3 +60,9 @@ function redraw_scene()
     scene:render()
     fn.dirty_scene(false)
 end
+
+function cleanup()
+    clock.cancel(redraw_clock_id)
+    metro.free_all()
+    print("byyyyeeee")
+end
