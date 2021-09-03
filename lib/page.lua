@@ -2,16 +2,16 @@ page = {}
 
 function page:song_view()
     graphics:setup()
-    local y_pos = waveform_pos
+    local y_pos = 0
     for i, track in ipairs(tracks) do
         local x_pos = 0
+        y_pos = y_pos + waveform_height * (i == fn.active_track() and 2 or 1)
         for _, s in ipairs(track.samples) do
             local height = util.round(math.abs(s) * waveform_height *
                 (i == fn.active_track() and 2 or 1))
             graphics:mlrs(x_pos, y_pos - height, 0, 2*height, i == fn.active_track() and 8 or 4)
             x_pos = x_pos + 1
         end
-        y_pos = y_pos + waveform_height * (i == fn.active_track() and 2 or 1)
     end
     graphics:teardown()
 end
