@@ -21,7 +21,7 @@ function page:render()
 end
 
 function page.init()
-  waveform_height = 15
+  waveform_height = 30
   waveform_pos = 15
   print("page_init finished")
 end
