@@ -27,6 +27,10 @@ function counters.sceneminder()
             track:buffer_render()
         end
     end
+    if fn.dirty_scene() then
+      redraw_scene()
+      fn.dirty_scene(false)
+    end
 end
 
 function counters.redraw_clock()
@@ -34,10 +38,6 @@ function counters.redraw_clock()
     if fn.dirty_screen() then
       redraw()
       fn.dirty_screen(false)
-    end
-    if fn.dirty_scene() then
-      redraw_scene()
-      fn.dirty_scene(false)
     end
     clock.sleep(1 / counters.fps)
   end
