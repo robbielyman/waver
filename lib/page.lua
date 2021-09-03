@@ -17,7 +17,7 @@ function page:song_view()
     if fn.looping() then
         playhead = util.round((counters.ui.frame / counters.ui.fps) * 128/fn.length_loop() % 128)
     end
-    graphics:mlrs(playhead, 0, 0, num_tracks * waveform_height)
+    graphics:mlrs(playhead, 0, 0, (num_tracks + 1) * waveform_height)
     graphics:teardown()
 end
 
