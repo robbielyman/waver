@@ -35,11 +35,13 @@ function page:song_view()
     for i, track in ipairs(tracks) do
         local x_pos = 1
         y_pos = y_pos + waveform_height
-        for j=1, 60*128, pixel_step do
-            local height = util.round(math.abs(track.samples[j]) * waveform_height *
-                (i == fn.active_track() and 2 or 1))
-            graphics:mlrs(x_pos, y_pos - height, 0, 2*height, i == fn.active_track() and 10 or 4)
-            x_pos = x_pos + 1
+        if not track.waiting_for_samples then
+            for j=1, 60*128, pixel_step do
+                local height = util.round(math.abs(track.samples[j]) * waveform_height *
+                    (i == fn.active_track() and 2 or 1))
+                graphics:mlrs(x_pos, y_pos - height, 0, 2*height, i == fn.active_track() and 10 or 4)
+                x_pos = x_pos + 1
+            end
         end
     end
     graphics:teardown()
