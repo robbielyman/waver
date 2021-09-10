@@ -13,14 +13,16 @@
 -- util = {}
 -- metro = {}
 -- include = require
+-- clock = {}
 
 include("waver/lib/includes")
 
 function init()
+    loop_start = 0
+    loop_end = 30
     scene.init()
     num_tracks = 4
-    is_looping = true
-    loop_length = 30
+    track_length = 5*60
     tracks.init()
     fn.init()
     active_track = 1

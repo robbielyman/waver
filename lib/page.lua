@@ -2,6 +2,14 @@ page = {}
 
 function page:song_view()
     graphics:setup()
+    local miniwindow_start = util.round(window_start / track_length * 128)
+    local miniwindow_end = util.round(window_end / track_length * 128)
+    local playhead = 0
+    if fn.looping() then
+        playhead = util.round((counters.ui.frame / counters.ui.fps) * 128/fn.length_loop() % 128)
+    end
+    graphics:mlrs(playhead, 0, 0, (num_tracks + 1) * waveform_height)
+    graphics:mlrs(miniwindow_start, 0, miniwindow_end, 1, 4)
     local y_pos = 0
     for i, track in ipairs(tracks) do
         local x_pos = 0
@@ -13,11 +21,6 @@ function page:song_view()
             x_pos = x_pos + 1
         end
     end
-    local playhead = 0
-    if fn.looping() then
-        playhead = util.round((counters.ui.frame / counters.ui.fps) * 128/fn.length_loop() % 128)
-    end
-    graphics:mlrs(playhead, 0, 0, (num_tracks + 1) * waveform_height)
     graphics:teardown()
 end
 
@@ -29,7 +32,8 @@ end
 function page.init()
   waveform_height = 10
   waveform_pos = 10
-  print("page_init finished")
+  window_start = 0
+  window_end = 30
 end
 
 return page
