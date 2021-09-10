@@ -2,7 +2,7 @@ page = {}
 
 function page:song_view()
     graphics:setup()
-    -- displays the current window as proportion of track length
+    -- highlights minimap location of window
     local miniwindow_start = util.round(window_start / track_length * 128)
     local miniwindow_end = util.round(window_end / track_length * 128)
     graphics:mlrs(miniwindow_start, 0, miniwindow_end, 1, 2)
@@ -13,11 +13,18 @@ function page:song_view()
     graphics:mlrs(miniloop_start, 2, 1, 0, 5)
     graphics:mlrs(miniloop_end, 0, 0, 2, 5)
     graphics:mlrs(miniloop_end-2, 2, 1, 0, 5)
-    local playhead = 0
+    -- calculate playhead position in seconds
+    local playhead = util.round(counters.ui.frame / counters.ui.fps)
     if fn.looping() then
-        playhead = util.round((counters.ui.frame / counters.ui.fps) * 128/(loop_end - loop_start)% 128)
+        playhead = (playhead % (loop_end - loop_start)) + loop_start
+    else
+        playhead = playhead % track_length
     end
-    graphics:mlrs(playhead, 0, 0, (num_tracks + 1) * waveform_height)
+    local miniplayhead = util.round(playhead / track_length * 128)
+    graphics:mlrs(miniplayhead, 0, 0, 2, 15)
+    -- calculate playhead position in pixels
+    local window_playhead = util.round((playhead - window_start) * 128/(window_end - window_start))
+    graphics:mlrs(window_playhead, 0, 0, (num_tracks + 1) * waveform_height)
     local y_pos = 0
     for i, track in ipairs(tracks) do
         local x_pos = 0
