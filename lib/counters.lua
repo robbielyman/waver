@@ -6,7 +6,7 @@ function counters.init()
     counters.ui.fps = 15
     counters.ui:start()
 
-    counters.transport = metro.init(counters.sceneminder,1/5)
+    counters.transport = metro.init(counters.sceneminder,1/15)
     counters.transport.frame = 1
     counters.transport:start()
 end
@@ -27,20 +27,20 @@ function counters.sceneminder()
             track:buffer_render()
         end
     end
-    if fn.dirty_scene() then
-      redraw_scene()
-      fn.dirty_scene(false)
-    end
 end
 
 function counters.redraw_clock()
-  while true do
-    if fn.dirty_screen() then
-      redraw()
-      fn.dirty_screen(false)
+    while true do
+        if fn.dirty_screen() then
+            redraw()
+            fn.dirty_screen(false)
+        end
+        if fn.dirty_scene() then
+            redraw_scene()
+            fn.dirty_scene(false)
+        end
+        clock.sleep(1 / counters.ui.fps)
     end
-    clock.sleep(1 / counters.ui.fps)
-  end
 end
 
 return counters
