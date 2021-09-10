@@ -31,12 +31,14 @@ function page:song_view()
     -- and display playhead in window
     local window_playhead = util.round((playhead - window_start) * 128/window_length)
     graphics:mlrs(window_playhead, y_pos, 0, (num_tracks + 1) * waveform_height)
-    local pixel_step = util.round(window_length/5)
+    local pixel_step    = util.round(window_length/5)
+    local pixel_start   = util.round(window_start*128/5)
+    local pixel_end     = util.round(window_end*128/5)
     for i, track in ipairs(tracks) do
         local x_pos = 1
         y_pos = y_pos + waveform_height
         if not track.waiting_for_samples then
-            for j=1, 60*128, pixel_step do
+            for j=pixel_start, pixel_end, pixel_step do
                 local height = util.round(math.abs(track.samples[j]) * waveform_height *
                     (i == fn.active_track() and 2 or 1))
                 graphics:mlrs(x_pos, y_pos - height, 0, 2*height, i == fn.active_track() and 10 or 4)
