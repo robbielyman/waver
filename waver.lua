@@ -29,6 +29,7 @@ function init()
     page.init()
     counters.init()
     redraw_clock_id = clock.run(counters.redraw_clock)
+    keys = {}
     print("init finished")
 end
 
@@ -38,18 +39,25 @@ function enc(n,d)
             0.5*window_length,5*60-0.5*window_length)
         fn.dirty_screen(true)
     end
-    if n == 2 then
+    if n == 2 and keys[1] == 0 then
         window_length = util.clamp(window_length - 0.1*window_length*d,5,5*60)
         window_center = util.clamp(window_center, 0.5*window_length, 5*60-0.5*window_length)
         fn.dirty_screen(true)
     end
-    if n == 3 then  
+    if n == 2 and keys[1] == 1 then
+        loop_start = util.clamp(loop_start + (window_length*d/32), 0, loop_end)
+    end
+    if n == 3 and keys[1] == 0 then  
         fn.active_track(util.clamp(fn.active_track() + d,1,num_tracks))
         fn.dirty_screen(true)
+    end
+    if n == 3 and keys[1] == 1 then
+        loop_end = util.clamp(loop_end + (window_length*d/32), loop_start, 5*60)
     end
 end
 
 function key(n,z)
+    keys[n] = z
     if n == 2 and z == 1 then
         fn.toggle_playback()
         fn.dirty_scene(true)
