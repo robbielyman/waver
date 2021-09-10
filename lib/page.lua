@@ -34,7 +34,7 @@ function page:song_view()
     end
     -- add window indicator of loop start and end
     local windowloop_start  = util.round((loop_start - window_start) * 128/window_length)
-    windowloop_start = windowloop_start > 1 and windowloop_start or 1
+    windowloop_start = windowloop_start == 0 and 1 or windowloop_start
     local windowloop_end    = util.round((loop_end - window_start) * 128/window_length)
     graphics:mlrs(windowloop_start, 2, 0, (num_tracks + 1)* waveform_height, 5)
     graphics:rect(windowloop_start, (num_tracks + 1)* waveform_height, 2, 2, 5)
