@@ -6,7 +6,7 @@ function page:song_view()
     local miniwindow_end = util.round(window_end / track_length * 128)
     local playhead = 0
     if fn.looping() then
-        playhead = util.round((counters.ui.frame / counters.ui.fps) * 128/fn.length_loop() % 128)
+        playhead = util.round((counters.ui.frame / counters.ui.fps) * 128/(loop_end - loop_start)% 128)
     end
     graphics:mlrs(playhead, 0, 0, (num_tracks + 1) * waveform_height)
     graphics:mlrs(miniwindow_start, 0, miniwindow_end, 1, 4)

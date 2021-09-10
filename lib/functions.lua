@@ -42,12 +42,6 @@ function fn.looping(bool)
     return is_looping
 end
 
-function fn.length_loop(length)
-    if length == nil then return loop_length end
-    loop_length = length
-    return loop_length
-end
-
 function rerun()
   norns.script.load(norns.state.script)
 end
