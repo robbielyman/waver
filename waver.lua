@@ -86,5 +86,6 @@ end
 function cleanup()
     clock.cancel(redraw_clock_id)
     metro.free_all()
+    softcut.poll_stop_phase()
     print("byyyyeeee")
 end

@@ -40,13 +40,6 @@ function page:song_view()
     graphics:rect(windowloop_start, (num_tracks + 1)* waveform_height, 2, 2, 5)
     graphics:rect(windowloop_end-2, (num_tracks + 1)* waveform_height, 2, 2, 5)
     graphics:mlrs(windowloop_end, 2, 0, (num_tracks + 1) * waveform_height, 5)
-    -- calculate playhead position in seconds
-    local playhead = counters.ui.frame / counters.ui.fps
-    if fn.looping() then
-        playhead = (playhead % (loop_end - loop_start)) + loop_start
-    else
-        playhead = playhead % track_length
-    end
     -- display playhead indicator on minimap
     local miniplayhead = util.round(playhead / track_length * 128)
     graphics:mlrs(miniplayhead, 0, 0, 2, 15)
