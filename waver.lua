@@ -34,7 +34,7 @@ end
 
 function enc(n,d)
     if n == 1 then
-        window_center = util.clamp(window_center + (window_length*d/128),
+        window_center = util.clamp(window_center + (window_length*d/32),
             0.5*window_length,5*60-0.5*window_length)
         fn.dirty_screen(true)
     end
