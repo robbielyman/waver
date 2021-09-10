@@ -2,6 +2,7 @@ page = {}
 
 function page:song_view()
     graphics:setup()
+    local y_pos = 2
     local window_start  = window_center - 0.5*window_length
     local window_end    = window_center + 0.5*window_length
     -- highlights minimap location of window
@@ -16,21 +17,7 @@ function page:song_view()
     graphics:mlrs(miniloop_start, 2, 1, 0, 5)
     graphics:mlrs(miniloop_end, 0, 0, 2, 5)
     graphics:mlrs(miniloop_end-2, 2, 1, 0, 5)
-    -- calculate playhead position in seconds
-    local playhead = counters.ui.frame / counters.ui.fps
-    if fn.looping() then
-        playhead = (playhead % (loop_end - loop_start)) + loop_start
-    else
-        playhead = playhead % track_length
-    end
-    -- display playhead indicator on minimap
-    local miniplayhead = util.round(playhead / track_length * 128)
-    graphics:mlrs(miniplayhead, 0, 0, 2, 15)
-    local y_pos = 2
-    -- calculate playhead position in pixels
-    -- and display playhead in window
-    local window_playhead = util.round((playhead - window_start) * 128/window_length)
-    graphics:mlrs(window_playhead, y_pos, 0, (num_tracks + 1) * waveform_height)
+    -- display tracks in window
     local pixel_step    = util.round(window_length/5)
     local pixel_start   = util.round(window_start*128/5)
     local pixel_end     = util.round(window_end*128/5)
@@ -45,6 +32,27 @@ function page:song_view()
             x_pos = x_pos + 1
         end
     end
+    -- add window indicator of loop start and end
+    local windowloop_start  = util.round((loop_start - window_start) * 128/window_length)
+    local windowloop_end    = util.round((loop_end - window_start) * 128/window_length)
+    graphics:mlrs(windowloop_start, y_pos, 0, (num_tracks + 1)* waveform_height, 5)
+    graphics:mlrs(windowloop_start, (num_tracks + 1)* waveform_height, 2, 2, 5)
+    graphics:mlrs(windowloop_end-2, (num_tracks + 1)* waveform_height, 2, 2, 5)
+    graphics:mlrs(windowloop_end, y_pos, 0, (num_tracks + 1) * waveform_height, 5)
+    -- calculate playhead position in seconds
+    local playhead = counters.ui.frame / counters.ui.fps
+    if fn.looping() then
+        playhead = (playhead % (loop_end - loop_start)) + loop_start
+    else
+        playhead = playhead % track_length
+    end
+    -- display playhead indicator on minimap
+    local miniplayhead = util.round(playhead / track_length * 128)
+    graphics:mlrs(miniplayhead, 0, 0, 2, 15)
+    -- calculate playhead position in pixels
+    -- and display playhead in window
+    local window_playhead = util.round((playhead - window_start) * 128/window_length)
+    graphics:mlrs(window_playhead, y_pos, 0, (num_tracks + 1) * waveform_height)
     graphics:teardown()
 end
 
