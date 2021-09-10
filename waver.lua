@@ -45,7 +45,7 @@ function enc(n,d)
         fn.dirty_screen(true)
     end
     if n == 2 and keys[1] == 1 then
-        loop_start = util.clamp(loop_start + (window_length*d/32), 0, loop_end)
+        loop_start = util.clamp(loop_start + (window_length*d/64), 0, loop_end)
         for i = 1, 2 do
             softcut.loop_start(i, loop_start)
         end
@@ -55,7 +55,7 @@ function enc(n,d)
         fn.dirty_screen(true)
     end
     if n == 3 and keys[1] == 1 then
-        loop_end = util.clamp(loop_end + (window_length*d/32), loop_start, 5*60)
+        loop_end = util.clamp(loop_end + (window_length*d/64), loop_start, 5*60)
         for i = 1, 2 do
             softcut.loop_end(i, loop_end)
         end
