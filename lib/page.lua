@@ -10,9 +10,9 @@ function page:song_view()
     local miniloop_start = util.round(loop_start / track_length * 128)
     local miniloop_end = util.round(loop_end / track_length * 128)
     graphics:mlrs(miniloop_start, 0, 0, 2, 5)
-    graphics:mlrs(miniloop_start, 2, 0, 1, 5)
+    graphics:mlrs(miniloop_start, 2, 0, 2, 5)
     graphics:mlrs(miniloop_end, 0, 0, 2, 5)
-    graphics:mlrs(miniloop_end-1, 2, 0, 1, 5)
+    graphics:mlrs(miniloop_end-1, 2, 0, 2, 5)
     local playhead = 0
     if fn.looping() then
         playhead = util.round((counters.ui.frame / counters.ui.fps) * 128/(loop_end - loop_start)% 128)
