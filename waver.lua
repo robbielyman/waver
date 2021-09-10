@@ -34,11 +34,12 @@ end
 
 function enc(n,d)
     if n == 1 then
-        window_center = util.clamp(window_center + (d*5/128),0.5*window_length,5*60-0.5*window_length)
+        window_center = util.clamp(window_center + (window_length*5/128),
+            0.5*window_length,5*60-0.5*window_length)
         fn.dirty_screen(true)
     end
     if n == 2 then
-        window_length = util.clamp(window_length + 0.1*d,5,5*60)
+        window_length = util.clamp(window_length + 0.1*window_length*d,5,5*60)
         fn.dirty_screen(true)
     end
     if n == 3 then  
