@@ -17,7 +17,7 @@ function page:song_view()
     graphics:mlrs(miniloop_end, 0, 0, 2, 5)
     graphics:mlrs(miniloop_end-2, 2, 1, 0, 5)
     -- calculate playhead position in seconds
-    local playhead = util.round(counters.ui.frame / counters.ui.fps)
+    local playhead = counters.ui.frame / counters.ui.fps
     if fn.looping() then
         playhead = (playhead % (loop_end - loop_start)) + loop_start
     else
