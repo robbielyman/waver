@@ -22,7 +22,7 @@ function Track:buffer_render()
             callback_inactive = true
         end
     end)
-    softcut.render_buffer(1,0,5*60,5*60*128)
+    softcut.render_buffer(1,0,5*60,2*60*128)
     fn.dirty_scene(true)
 end
 
