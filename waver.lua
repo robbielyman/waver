@@ -20,6 +20,7 @@ include("waver/lib/includes")
 function init()
     loop_start = 0
     loop_end = 30
+    active_page = 0
     scene.init()
     num_tracks = 4
     track_length = 5*60
@@ -40,7 +41,7 @@ function enc(n,d)
         fn.dirty_screen(true)
     end
     if n == 2 and keys[1] == 0 then
-        window_length = util.clamp(window_length - 0.1*window_length*d,5,5*60)
+        window_length = util.clamp(window_length - 0.1*window_length*d,1,5*60)
         window_center = util.clamp(window_center, 0.5*window_length, 5*60-0.5*window_length)
         fn.dirty_screen(true)
     end
@@ -50,8 +51,15 @@ function enc(n,d)
             softcut.loop_start(i, loop_start)
         end
     end
-    if n == 3 and keys[1] == 0 then  
+    if n == 3 and keys[1] == 0 and active_page == 0 then
         fn.active_track(util.clamp(fn.active_track() + d,1,num_tracks))
+        fn.dirty_screen(true)
+    end
+    if n == 3 and keys[1] == 0 and active_page == 1 then
+        local track = tracks[fn.active_track()]
+        track.pan = util.clamp(track.pan + d/25,-1,1)
+        softcut.pan(1, track.pan)
+        softcut.pan(2, track.pan)
         fn.dirty_screen(true)
     end
     if n == 3 and keys[1] == 1 then
@@ -67,6 +75,18 @@ function key(n,z)
     if n == 2 and z == 1 then
         fn.toggle_playback()
         fn.dirty_scene(true)
+    end
+    if n == 3 and z == 1 then
+        if active_page == 0 then
+            active_page = 1
+            fn.dirty_scene(true)
+            fn.dirty_screen(true)
+        end
+        if active_page == 1 and keys[1] == 1 then
+            active_page = 0
+            fn.dirty_scene(true)
+            fn.dirty_screen(true)
+        end
     end
     fn.dirty_screen(true)
 end

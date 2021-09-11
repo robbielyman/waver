@@ -40,20 +40,30 @@ function scene:song_view()
         local theta = math.pi/4 * (track.pan + 1)
         local left = track.level * math.cos(theta)
         local right = track.level * math.sin(theta)
-        softcut.buffer_read_mono(track.file, 0, 0, 30, 1, 1, 1, left)
-        softcut.buffer_read_mono(track.file, 0, 0, 30, 1, 2, 1, right)
+        softcut.buffer_read_mono(track.file, 0, 0, -1, 1, 1, 1, left)
+        softcut.buffer_read_mono(track.file, 0, 0, -1, 1, 2, 1, right)
     end
     softcut.pan(1,-1)
     softcut.pan(2,1)
 end
 
+function scene:track_view()
+    softcut.buffer_clear()
+    local track = tracks[fn.active_track()]
+    softcut.buffer_read_mono(track.file, 0, 0, -1, 1, 1, 0, track.level)
+    softcut.pan(1,track.pan)
+    softcut.pan(2,track.pan)
+end
+
 function scene:render()
-    if is_playing == true then
+    if is_playing == true and active_page == 0 then
         self:song_view()
+    end
+    if is_playing == true and active_page == 1 then
+        self:track_view()
     end
     softcut.play(1,is_playing and 1 or 0)
     softcut.play(2,is_playing and 1 or 0)
-    fn.dirty_scene(false)
 end
 
 return scene
