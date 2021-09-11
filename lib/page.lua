@@ -24,9 +24,9 @@ function page:track_view()
     self:minimap(window_start, window_end)
     local track = tracks[fn.active_track()]
     local y_pos = 2 + 3*waveform_height
-    local pixel_step = util.round(window_length/2)
-    local pixel_start = util.round(window_start*128/2)
-    local pixel_end = util.round(window_end*128/2)
+    local pixel_step = util.round(window_length/5)
+    local pixel_start = util.round(window_start*128/5)
+    local pixel_end = util.round(window_end*128/5)
     local x_pos = 1
     for j = pixel_start, pixel_end, pixel_step do
         local s = track.samples[j] or 0
@@ -53,9 +53,9 @@ function page:song_view()
     self:minimap(window_start, window_end)
     local y_pos = 2
     -- display tracks in window
-    local pixel_step    = util.round(window_length/2)
-    local pixel_start   = util.round(window_start*128/2)
-    local pixel_end     = util.round(window_end*128/2)
+    local pixel_step    = util.round(window_length/5)
+    local pixel_start   = util.round(window_start*128/5)
+    local pixel_end     = util.round(window_end*128/5)
     for i, track in ipairs(tracks) do
         local x_pos = 1
         y_pos = y_pos + waveform_height
