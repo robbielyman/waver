@@ -29,7 +29,7 @@ function init()
     page.init()
     counters.init()
     redraw_clock_id = clock.run(counters.redraw_clock)
-    keys = {}
+    keys = {0,0,0}
     print("init finished")
 end
 
