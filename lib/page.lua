@@ -4,7 +4,7 @@ function page:minimap(window_start,window_end)
     -- highlights minimap location of window
     local miniwindow_start  = util.round(window_start / track_length * 128)
     local miniwindow_end    = util.round(window_end / track_length * 128)
-    graphics:mlrs(miniwindow_start, 0, miniwindow_end, 1, 2)
+    graphics:mlrs(miniwindow_start, 1, miniwindow_end, 1, 2)
     -- add minimap indicator of loop start and end
     local miniloop_start    = util.round(loop_start / track_length * 128)
     miniloop_start = miniloop_start > 1 and miniloop_start or 1
