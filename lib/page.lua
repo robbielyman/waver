@@ -2,25 +2,25 @@ page = {}
 
 function page:minimap(window_start,window_end)
     -- highlights minimap location of window
-    local miniwindow_start  = util.round(window_start / track_length * 128)
-    local miniwindow_end    = util.round(window_end / track_length * 128)
+    local miniwindow_start  = util.round((window_start * 128) / track_length)
+    local miniwindow_end    = util.round((window_end  * 128) / track_length)
     graphics:mlrs(miniwindow_start, 1, miniwindow_end, 1, 2)
     -- add minimap indicator of loop start and end
-    local miniloop_start    = util.round(loop_start / track_length * 128)
+    local miniloop_start    = util.round((loop_start * 128) / track_length)
     miniloop_start = miniloop_start > 1 and miniloop_start or 1
-    local miniloop_end      = util.round(loop_end / track_length * 128)
+    local miniloop_end      = util.round((loop_end * 128) / track_length)
     graphics:mlrs(miniloop_start, 0, 0, 2, 5)
     graphics:mlrs(miniloop_start, 2, 1, 0, 5)
     graphics:mlrs(miniloop_end, 0, 0, 2, 5)
     graphics:mlrs(miniloop_end-2, 2, 1, 0, 5)
     -- display playhead indicator on minimap
-    local miniplayhead = util.round(playhead / track_length * 128)
+    local miniplayhead = util.round((playhead * 128) / track_length)
     graphics:mlrs(miniplayhead, 0, 0, 2, 15)
 end
 
 function page:track_view()
-    local window_start  = window_center - 0.5*window_length
-    local window_end    = window_center + 0.5*window_length
+    local window_start  = window_center - (0.5*window_length)
+    local window_end    = window_center + (0.5*window_length)
     self:minimap(window_start, window_end)
     local track = tracks[fn.active_track()]
     local y_pos = 2 + 3*waveform_height
