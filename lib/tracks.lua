@@ -15,14 +15,11 @@ function Track:buffer_render()
     softcut.buffer_read_mono(self.file,0,0,-1,1,1,0,self.level)
     softcut.event_render(function(_,_,_,samples)
         if not callback_inactive then
-            print("track" .. self.id .. " got a callback for render call " .. self.waiting_for_samples)
+            print("track " .. self.id .. " got a callback for render call " .. self.waiting_for_samples)
             for i = 1, #samples do
                 self.samples[#(self.samples) + 1] = samples[i]
             end
-            self.waiting_for_samples = self.waiting_for_samples + 1
-            if self.waiting_for_samples > 5 then
-                self.waiting_for_samples = -1
-            end
+            self.waiting_for_samples = self.waiting_for_samples == 5 and -1 or self.waiting_for_samples + 1
             fn.dirty_scene(true)
             callback_inactive = true
         end
