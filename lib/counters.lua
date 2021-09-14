@@ -23,12 +23,12 @@ function counters.sceneminder()
         counters.transport.frame = counters.transport.frame + 1
     end
     for _, track in ipairs(tracks) do
-        if track.waiting_for_samples and callback_inactive then
+        if track.waiting_for_samples > 0 and callback_inactive then
             track:buffer_render()
         end
     end
     if scratch_track then
-        if scratch_track.waiting_for_samples and callback_inactive then
+        if scratch_track.waiting_for_samples > 0 and callback_inactive then
             scratch_track:buffer_render()
         end
     end

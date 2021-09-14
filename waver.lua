@@ -77,13 +77,12 @@ function key(n,z)
         fn.dirty_scene(true)
     end
     if n == 3 and z == 1 then
-        if active_page == 0 then
-            active_page = 1
-            fn.dirty_scene(true)
-            fn.dirty_screen(true)
-        end
-        if active_page == 1 and keys[1] == 1 then
-            active_page = 0
+        if keys[1] == 1 then
+            if active_page == 0 then
+                active_page = 1
+            elseif active_page == 1 then
+                active_page = 0
+            end
             fn.dirty_scene(true)
             fn.dirty_screen(true)
         end
