@@ -36,8 +36,10 @@ end
 
 function enc(n,d)
     if n == 1 then
-        window_center = util.clamp(window_center + (window_length*d/32),
-            0.5*window_length,300 -(0.5*window_length))
+        local new_center = window_center + (window_length*d)/32
+        local startbumper = 0.5*window_length
+        local endbumper = track_length - 0.5*window_length
+        window_center = util.clamp(new_center, startbumper, endbumper)
         fn.dirty_screen(true)
     end
     if n == 2 and keys[1] == 0 then
