@@ -41,7 +41,7 @@ function enc(n,d)
         fn.dirty_screen(true)
     end
     if n == 2 and keys[1] == 0 then
-        window_length = util.clamp(window_length - 0.1*window_length*d,5,5*60)
+        window_length = util.clamp(window_length - 0.1*window_length*d,1,5*60)
         window_center = util.clamp(window_center, 0.5*window_length, 5*60-0.5*window_length)
         fn.dirty_screen(true)
     end
