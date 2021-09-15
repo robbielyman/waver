@@ -43,12 +43,11 @@ function page:track_view()
             x_pos = x_pos + 1
         end
     end
-    self:markers(window_start)
+    self:markers()
 end
 
 function page:song_view()
-    local window_start  = window_center - 0.5*window_length
-    local window_end    = window_center + 0.5*window_length
+    local window_end    = window_start + window_length
     self:minimap(window_start, window_end)
     local y_pos = 2
     -- display tracks in window
