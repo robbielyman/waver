@@ -36,15 +36,20 @@ end
 
 function enc(n,d)
     if n == 1 then
-        local value = window_center + (window_length*d)/32
-        local min = 0.5*window_length
-        local max = track_length - 0.5*window_length
-        window_center = util.clamp(value, min, max)
+        local value = window_start + (window_length*d)/32
+        local min = 0
+        local max = track_length - window_length
+        window_start = util.clamp(value, min, max)
         fn.dirty_screen(true)
     end
     if n == 2 and keys[1] == 0 then
-        window_length = util.clamp(window_length - 0.1*window_length*d,1,5*60)
-        window_center = util.clamp(window_center, 0.5*window_length, 5*60-0.5*window_length)
+        local value = window_length - 0.1*window_length*d
+        local min = 1
+        local max = track_length
+        window_length = util.clamp(value, min, max)
+        min = 0
+        max = track_length - window_length
+        window_start = util.clamp(window_start, min, max)
         fn.dirty_screen(true)
     end
     if n == 2 and keys[1] == 1 then

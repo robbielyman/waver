@@ -1,27 +1,26 @@
 page = {}
 
-function page:minimap(window_start,window_end)
+function page:minimap()
+    local window_end = window_start + window_length
     -- highlights minimap location of window
-    local miniwindow_start  = util.round((window_start * 128) / track_length)
-    local miniwindow_end    = util.round((window_end  * 128) / track_length)
+    local miniwindow_start  = util.linlin(0, track_length, 1, 128, window_start)
+    local miniwindow_end    = util.linlin(0, track_length, 1, 128, window_end)
     graphics:mlrs(miniwindow_start, 1, miniwindow_end, 1, 2)
     -- add minimap indicator of loop start and end
-    local miniloop_start    = util.round((loop_start * 128) / track_length)
-    miniloop_start = miniloop_start > 1 and miniloop_start or 1
-    local miniloop_end      = util.round((loop_end * 128) / track_length)
+    local miniloop_start    = util.linlin(0, track_length, 1, 128, loop_start)
+    local miniloop_end      = util.linlin(0, track_length, 1, 128, loop_end)
     graphics:mlrs(miniloop_start, 0, 0, 2, 5)
     graphics:mlrs(miniloop_start, 2, 1, 0, 5)
     graphics:mlrs(miniloop_end, 0, 0, 2, 5)
     graphics:mlrs(miniloop_end-2, 2, 1, 0, 5)
     -- display playhead indicator on minimap
-    local miniplayhead = util.round((playhead * 128) / track_length)
+    local miniplayhead = util.linlin(0, track_length, 1, 128, playhead)
     graphics:mlrs(miniplayhead, 0, 0, 2, 15)
 end
 
 function page:track_view()
-    local window_start  = window_center - (0.5*window_length)
-    local window_end    = window_center + (0.5*window_length)
-    self:minimap(window_start, window_end)
+    local window_end    = window_start + window_length
+    self:minimap()
     local track = tracks[fn.active_track()]
     local y_pos = 2 + 3*waveform_height
     local pixel_step = util.round(window_length)
@@ -67,10 +66,10 @@ function page:song_view()
             x_pos = x_pos + 1
         end
     end
-    self:markers(window_start)
+    self:markers()
 end
 
-function page:markers(window_start)
+function page:markers()
     -- add window indicator of loop start and end
     local windowloop_start  = util.round((loop_start - window_start) * 128/window_length)
     windowloop_start = windowloop_start == 0 and 1 or windowloop_start
@@ -100,7 +99,7 @@ function page.init()
     waveform_height = 10
     waveform_pos = 10
     window_length = 30
-    window_center = 15
+    window_start = 0
 end
 
 return page
