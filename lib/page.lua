@@ -48,18 +48,19 @@ end
 
 function page:song_view()
     local window_end    = window_start + window_length
-    self:minimap(window_start, window_end)
+    self:minimap()
     local y_pos = 2
     -- display tracks in window
-    local pixel_step    = util.round(window_length)
-    local pixel_start   = util.round(window_start*128)
-    local pixel_end     = util.round(window_end*128)
     for i, track in ipairs(tracks) do
         local x_pos = 1
         y_pos = y_pos + waveform_height
-        for j=pixel_start, pixel_end, pixel_step do
-            local s = track.samples[j] or 0
-            local height = util.round(math.abs(s) * waveform_height *
+        for j=(window_start*128),(window_end*128),window_length do
+            local weight = j % 1
+            local index = j - weight
+            local s = track.samples[index] or 0
+            local t = track.samples[index + 1] or 0
+            local preheight = s*(1-weight) + t*weight
+            local height = util.round(math.abs(preheight) * waveform_height *
                 (i == fn.active_track() and 2 or 1))
             graphics:mlrs(x_pos, y_pos - height, 0, 2*height, i == fn.active_track() and 10 or 4)
             x_pos = x_pos + 1
