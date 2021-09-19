@@ -23,22 +23,27 @@ function page:track_view()
     self:minimap()
     local track = tracks[fn.active_track()]
     local y_pos = 2 + 3*waveform_height
-    local pixel_step = util.round(window_length)
-    local pixel_start = util.round(window_start*128)
-    local pixel_end = util.round(window_end*128)
     local x_pos = 1
-    for j = pixel_start, pixel_end, pixel_step do
-        local s = track.samples[j] or 0
-        local height = util.round(math.abs(s) * 3 * waveform_height)
+    for j = (window_start*128),(window_end*128),window_length do
+        local weight = j % 1
+        local index = j - weight
+        local s = track.samples[index] or 0
+        local t = track.samples[index + 1] or 0
+        local preheight = s*(1-weight) + t*weight
+        local height = util.round(math.abs(preheight) * 3 * waveform_height)
         graphics:mlrs(x_pos, y_pos - height, 0, 2*height, 4)
         x_pos = x_pos + 1
     end
     if scratch_track then
         x_pos = 1
         y_pos = y_pos + 2*waveform_height
-        for j = pixel_start, pixel_end, pixel_step do
-            local s = scratch_track.samples[j] or 0
-            local height = util.round(math.abs(s) * 2 * waveform_height)
+        for j = (window_start*128),(window_end*128),window_length do
+            local weight = j % 1
+            local index = j - weight
+            local s = scratch_track.samples[index] or 0
+            local t = scratch_track.samples[index+1] or 0
+            local preheight = s*(1-weight) + t*weight
+            local height = util.round(math.abs(preheight) * 2 * waveform_height)
             graphics:mlrs(x_pos, y_pos - height, 0, 2 * height, 10)
             x_pos = x_pos + 1
         end
