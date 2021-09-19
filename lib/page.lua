@@ -18,35 +18,26 @@ function page:minimap()
     graphics:mlrs(miniplayhead, 0, 0, 2, 15)
 end
 
-function page:track_view()
-    local window_end    = window_start + window_length
-    self:minimap()
-    local track = tracks[fn.active_track()]
-    local y_pos = 2 + 3*waveform_height
+local function drawsamples(track, start, finish, step, center, scale, brightness)
     local x_pos = 1
-    for j = (window_start*128),(window_end*128),window_length do
+    for j = start,finish,step do
         local weight = j % 1
         local index = j - weight
         local s = track.samples[index] or 0
         local t = track.samples[index + 1] or 0
         local preheight = s*(1-weight) + t*weight
-        local height = util.round(math.abs(preheight) * 3 * waveform_height)
-        graphics:mlrs(x_pos, y_pos - height, 0, 2*height, 4)
+        local height = uitl.round(math.abs(preheight) * scale)
+        graphics:mlrs(x_pos,center - height, 0, 2*height, brightness)
         x_pos = x_pos + 1
     end
+end
+
+function page:track_view()
+    local window_end    = window_start + window_length
+    self:minimap()
+    drawsamples(tracks[fn.active_track()], window_start*128, window_end*128, window_length, 2 + 1.5*waveform_height, 1.5*waveform_height, 4)
     if scratch_track then
-        x_pos = 1
-        y_pos = y_pos + 2*waveform_height
-        for j = (window_start*128),(window_end*128),window_length do
-            local weight = j % 1
-            local index = j - weight
-            local s = scratch_track.samples[index] or 0
-            local t = scratch_track.samples[index+1] or 0
-            local preheight = s*(1-weight) + t*weight
-            local height = util.round(math.abs(preheight) * 2 * waveform_height)
-            graphics:mlrs(x_pos, y_pos - height, 0, 2 * height, 10)
-            x_pos = x_pos + 1
-        end
+        drawsamples(scratch_track, window_start*128, window_end*128, window_length, 2 + 4 * waveform_height, waveform_height, 10)
     end
     self:markers()
 end
@@ -57,19 +48,7 @@ function page:song_view()
     local y_pos = 2
     -- display tracks in window
     for i, track in ipairs(tracks) do
-        local x_pos = 1
-        y_pos = y_pos + waveform_height
-        for j=(window_start*128),(window_end*128),window_length do
-            local weight = j % 1
-            local index = j - weight
-            local s = track.samples[index] or 0
-            local t = track.samples[index + 1] or 0
-            local preheight = s*(1-weight) + t*weight
-            local height = util.round(math.abs(preheight) * waveform_height *
-                (i == fn.active_track() and 2 or 1))
-            graphics:mlrs(x_pos, y_pos - height, 0, 2*height, i == fn.active_track() and 10 or 4)
-            x_pos = x_pos + 1
-        end
+        drawsamples(track, window_start*128, window_end*128, window_length, 2 + i*waveform_height, waveform_height, i == fn.active_track() and 10 or 4 )
     end
     self:markers()
 end
