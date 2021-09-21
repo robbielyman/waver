@@ -53,6 +53,7 @@ function scene:track_view()
     softcut.buffer_read_mono(track.file, 0, 0, -1, 1, 1, 0, track.level)
     softcut.pan(1,track.pan)
     softcut.pan(2,track.pan)
+    scratch_track.pan = track.pan
 end
 
 function scene:render()
