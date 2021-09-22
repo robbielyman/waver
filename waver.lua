@@ -78,14 +78,20 @@ function enc(n,d)
             if active_page == 1 then
                 -- Track View K2 + E2 adjusts track level
                 -- TODO: allow adjusting scratch track volume separately
-                local track = tracks[fn.active_track()]
+                local i = 0
+                local track = {}
+                if not fn.scratch_track_active() then
+                    track = tracks[fn.active_track()]
+                    i = 1
+                else
+                    track = scratch_track
+                    i = 2
+                end
                 local value = track.level + d*0.05
                 local min = 0
                 local max = 1
                 track.level = util.clamp(value, min, max)
-                for i = 1, 2 do
-                    softcut.level(i, track.level)
-                end
+                softcut.level(i, track.level)
             end
         else
             -- E2 zooms in and out
@@ -125,6 +131,7 @@ function enc(n,d)
                 for i = 1, 2 do
                     softcut.pan(i, track.pan)
                 end
+                scratch_track.pan = track.pan
             end
         else
             if active_page == 1 then
@@ -191,11 +198,7 @@ function key(n,z)
                 end
             elseif keys[1] == 0 then
                 -- short K3 toggles looping
-                if fn.looping() then
-                    fn.looping(false)
-                else
-                    fn.looping(true)
-                end
+                fn.looping(fn.looping() and false or true)
             end
         end
     end

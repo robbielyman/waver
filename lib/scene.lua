@@ -28,7 +28,22 @@ function scene.init()
     end
     playhead = 0
     softcut.phase_quant(1, 1/15)
-    softcut.event_phase(function(voice, position) if voice == 1 then playhead = position end end)
+    softcut.event_phase(function(voice, position)
+        if voice == 1 then
+            playhead = position
+            if fn.looping() and loop_start <= position and position <= loop_end then
+                for i = 1, 2 do
+                    softcut.loop_start(i, loop_start)
+                    softcut.loop_start(i, loop_end)
+                end
+            else
+                for i = 1, 2 do
+                    softcut.loop_start(i, 0)
+                    softcut.loop_end(i, track_length)
+                end
+            end
+        end
+    end)
     softcut.poll_start_phase()
     is_playing = false
     is_looping = true
