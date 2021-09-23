@@ -1,4 +1,5 @@
 tracks = {}
+scratch_track = {}
 
 Track = {
     file = "",
