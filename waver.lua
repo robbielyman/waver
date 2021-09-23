@@ -67,7 +67,7 @@ function enc(n,d)
             local value = loop_start + (window_length*d/64)
             local min = 0
             local max = loop_end
-            loop_start = util.clamp(value, min max)
+            loop_start = util.clamp(value, min, max)
             fn.update_loop_start()
             fn.dirty_screen(true)
         elseif keys[2] == 1 then
@@ -215,7 +215,7 @@ function long_press(n)
             -- active_page = 2
         elseif active_page == 1 then
             -- Track View Long K1 loads sample.
-            fileselect.enter(_path.dust, scratch_track:load)
+            fileselect.enter(_path.dust, function(file) scratch_track:load(file) end)
         end
     elseif n == 2 then
         if active_page == 1 then

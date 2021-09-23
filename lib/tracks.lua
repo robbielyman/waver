@@ -74,4 +74,14 @@ function tracks.init()
     scratch_track.waiting_for_samples = 0
 end
 
+function scratch_track:load(file)
+    if file == "cancel" then
+        return
+    end
+    self.file = file
+    softcut.buffer_read_mono(self.file,0,0,-1,1,2,0,1)
+    self.waiting_for_samples = 1
+    fn.dirty_screen(true)
+end
+
 return tracks
