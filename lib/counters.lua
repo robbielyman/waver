@@ -36,7 +36,7 @@ end
 
 function counters.redraw_clock()
     while true do
-        if fn.dirty_screen() then
+        if fn.dirty_screen() and not selecting then
             redraw()
             fn.dirty_screen(false)
         end

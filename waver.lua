@@ -31,6 +31,7 @@ function init()
     counters.init()
     redraw_clock_id = clock.run(counters.redraw_clock)
     keys, key_counter = {0,0,0}, {{}, {}, {}}
+    selecting = false
 end
 
 function enc(n,d)
@@ -215,7 +216,11 @@ function long_press(n)
             -- active_page = 2
         elseif active_page == 1 then
             -- Track View Long K1 loads sample.
-            fileselect.enter(_path.dust, function(file) scratch_track:load(file) end)
+            fileselect.enter(_path.dust, function(file)
+                scratch_track:load(file)
+                selecting = false
+            end)
+            selecting = true
         end
     elseif n == 2 then
         if active_page == 1 then
