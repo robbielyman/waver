@@ -11,3 +11,5 @@ scene = include(lib .. "scene")
 counters = include(lib .. "counters")
 
 graphics = include(lib .. "graphics")
+
+fileselect = require("fileselect")
