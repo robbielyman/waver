@@ -1,5 +1,4 @@
 tracks = {}
-scratch_track = {}
 
 Track = {
     file = "",
@@ -44,6 +43,8 @@ function Track:new(file, level, pan, id)
     return t
 end
 
+scratch_track = Track:new("", 1, 0, -1)
+
 local working_dir = _path.dust .. "code/waver/data/active"
 
 function tracks.init()
@@ -52,7 +53,6 @@ function tracks.init()
     for i = 1, num_tracks do
         tracks[i] = Track:new(working_dir .. "/track_" .. i ..".wav",1,0,i)
     end
-    scratch_track = Track:new("",1,0,-1)
     scratch_track.waiting_for_samples = 0
 end
 
@@ -75,6 +75,7 @@ function scratch_track:buffer_render()
     end)
     softcut.render_buffer(2,(self.waiting_for_samples - 1)*60,(self.waiting_for_samples)*60,60*128)
 end
+
 function scratch_track:load(file)
     if file == "cancel" then
         return
