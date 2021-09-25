@@ -66,6 +66,9 @@ function scene:track_view()
     softcut.buffer_clear()
     local track = tracks[fn.active_track()]
     softcut.buffer_read_mono(track.file, 0, 0, -1, 1, 1, 0, track.level)
+    if scratch_track.file ~= "" then
+        softcut.buffer_read_mono(scratch_track.file, 0, 0, -1, 1, 2, 0, scratch_track.level)
+    end
     softcut.pan(1,track.pan)
     softcut.pan(2,track.pan)
     scratch_track.pan = track.pan

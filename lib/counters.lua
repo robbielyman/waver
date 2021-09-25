@@ -27,10 +27,8 @@ function counters.sceneminder()
             track:buffer_render()
         end
     end
-    if scratch_track then
-        if scratch_track.waiting_for_samples > 0 and callback_inactive then
-            scratch_track:buffer_render()
-        end
+    if scratch_track.waiting_for_samples > 0 and callback_inactive then
+        scratch_track:buffer_render()
     end
 end
 

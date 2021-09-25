@@ -78,7 +78,6 @@ function enc(n,d)
             end
             if active_page == 1 then
                 -- Track View K2 + E2 adjusts track level
-                -- TODO: allow adjusting scratch track volume separately
                 local i = 0
                 local track = {}
                 if not fn.scratch_track_active() then
@@ -171,12 +170,13 @@ function key(n,z)
                 end
                 if active_page == 1 then
                     -- Track View K1 + K2 exits to song view, discarding changes
-                    -- TODO: implement discarding changes
+                    scratch_track:reset()
                     active_page = 0
                 elseif active_page == 0 then
                     -- Song View K1 + K2 enters track view as "undo"
-                    -- TODO: implement undo
+                    scratch_track:undo()
                     active_page = 1
+                    fn.dirty_scene(true)
                 end
             elseif keys[1] == 0 then
                 -- short K2 toggles playback
@@ -191,10 +191,12 @@ function key(n,z)
                 end
                 if active_page == 1 then
                     -- Track View K1 + K3 exits to song view, saving changes
-                    -- TODO: implement saving changes
+                    scratch_track:commit()
                     active_page = 0
+                    fn.dirty_scene(true)
                 elseif active_page == 0 then
                     -- Song View K1 + K3 enters track view
+                    scratch_track:reset()
                     active_page = 1
                 end
             elseif keys[1] == 0 then
@@ -224,16 +226,11 @@ function long_press(n)
         end
     elseif n == 2 then
         if active_page == 1 then
-            -- Track View Long K2 writes region between cut markers to disk with fade;
-            -- then clears buffer
-            -- TODO: implement this
-            print("long K2")
+            scratch_track:cut()
         end
     elseif n == 3 then
         if active_page == 1 then
-            -- Track View Long K3 reads in from disk at insert point
-            -- TODO: implement this
-            print("long K3")
+            scratch_track:paste()
         end
     end
 end
