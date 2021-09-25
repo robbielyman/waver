@@ -35,9 +35,9 @@ end
 function page:track_view()
     local window_end    = window_start + window_length
     self:minimap()
-    drawsamples(tracks[fn.active_track()], window_start*128, window_end*128, window_length, 2 + 1.5*waveform_height, 1.5*waveform_height, 4)
+    drawsamples(tracks[fn.active_track()], window_start*128, window_end*128, window_length, 2 + 1.5*waveform_height, 1.5*waveform_height, fn.scratch_track_active() and 4 or 10)
     if scratch_track then
-        drawsamples(scratch_track, window_start*128, window_end*128, window_length, 2 + 4 * waveform_height, waveform_height, 10)
+        drawsamples(scratch_track, window_start*128, window_end*128, window_length, 2 + 4 * waveform_height, waveform_height, fn.scratch_track_active() and 10 or 4)
     end
     self:markers()
 end
