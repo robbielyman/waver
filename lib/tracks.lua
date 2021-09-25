@@ -82,7 +82,7 @@ function scratch_track:paste()
         softcut.buffer_read_mono(self.file,0,0,-1,1,2,0,self.level)
     end
     softcut.buffer_read_mono(working_dir .. "/cut.wav",0,playhead,-1,1,2,1,self.level)
-    softcut.buffer_write_mono(working_dir .. "/scratch.wav",0,-1.1)
+    softcut.buffer_write_mono(working_dir .. "/scratch.wav",0,-1,1)
     self.file = working_dir .. "/scratch.wav"
     self.waiting_for_samples = 1
     fn.dirty_scene(true)
