@@ -46,6 +46,13 @@ function rerun()
   norns.script.load(norns.state.script)
 end
 
+function fn.scratch_track_active(bool)
+    if bool == nil then return active_scratch_track end
+    active_scratch_track = bool
+    return active_scratch_track
+end
+
+
 function r()
     rerun()
 end

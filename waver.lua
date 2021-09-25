@@ -26,7 +26,7 @@ function init()
     track_length = 5*60
     tracks.init()
     fn.init()
-    active_track = 1
+    active_track, active_scratch_track = 1, false
     page.init()
     counters.init()
     redraw_clock_id = clock.run(counters.redraw_clock)
