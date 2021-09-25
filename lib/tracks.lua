@@ -70,7 +70,7 @@ function scratch_track:cut()
     if self.file == "" then return end
     softcut.buffer_read_mono(self.file,0,0,-1,1,2,0,self.level)
     softcut.buffer_clear_region_channel(2,loop_end,-1,0.01,0)
-    softcut.buffer_write_mono(working_dir .. "/cut.wav",loop_start,loop_end - loop_start)
+    softcut.buffer_write_mono(working_dir .. "/cut.wav",loop_start,loop_end - loop_start,1)
     self.file = ""
     self.level = 1
     fn.dirty_scene(true)
@@ -82,7 +82,7 @@ function scratch_track:paste()
         softcut.buffer_read_mono(self.file,0,0,-1,1,2,0,self.level)
     end
     softcut.buffer_read_mono(working_dir .. "/cut.wav",0,playhead,-1,1,2,1,self.level)
-    softcut.buffer_write_mono(working_dir .. "/scratch.wav",0,-1)
+    softcut.buffer_write_mono(working_dir .. "/scratch.wav",0,-1.1)
     self.file = working_dir .. "/scratch.wav"
     self.waiting_for_samples = 1
     fn.dirty_scene(true)
@@ -113,7 +113,7 @@ function scratch_track:commit()
     util.os_capture("cp " .. track.file .. " " .. working_dir .. "/undo.wav")
     softcut.buffer_read_mono(track.file,0,0,-1,1,1,0,track.level)
     softcut.buffer_read_mono(self.file,0,0,-1,1,1,1,self.level)
-    softcut.buffer_write_mono(track.file,0,-1)
+    softcut.buffer_write_mono(track.file,0,-1,1)
     track.waiting_for_samples = 1
     track.level = 1
 end
