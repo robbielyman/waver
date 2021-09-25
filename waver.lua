@@ -32,6 +32,7 @@ function init()
     redraw_clock_id = clock.run(counters.redraw_clock)
     keys, key_counter = {0,0,0}, {{}, {}, {}}
     selecting = false
+    last_active, last_level = 1, 1
 end
 
 function enc(n,d)

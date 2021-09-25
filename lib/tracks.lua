@@ -77,7 +77,7 @@ function scratch_track:cut()
 end
 
 function scratch_track:paste()
-    if not file_exists(working_dir .. "/cut.wav") then return end
+    if not util.file_exists(working_dir .. "/cut.wav") then return end
     if self.file ~= "" then
         softcut.buffer_read_mono(self.file,0,0,-1,1,2,0,self.level)
     end
@@ -94,10 +94,10 @@ function scratch_track:reset()
     self.pan = 0
     self.samples = {}
     self.waiting_for_samples = -1
-    if file_exists(working_dir .. "/cut.wav") then
+    if util.file_exists(working_dir .. "/cut.wav") then
         os_capture("rm " .. working_dir .. "/cut.wav")
     end
-    if file_exists(working_dir .. "/scratch.wav") then
+    if util.file_exists(working_dir .. "/scratch.wav") then
         os_capture("rm " .. working_dir .. "/scratch.wav")
     end
     fn.dirty_scene(true)
@@ -107,7 +107,7 @@ function scratch_track:commit()
     local track = tracks[fn.active_track()]
     last_active = fn.active_track()
     last_level = track.level
-    if file_exists(working_dir .. "/undo.wav") then
+    if util.file_exists(working_dir .. "/undo.wav") then
         os_capture("rm " .. working_dir .. "/undo.wav")
     end
     os_capture("cp " .. track.file .. " " .. working_dir .. "/undo.wav")
@@ -121,7 +121,7 @@ end
 function scratch_track:undo()
     fn.active_track(last_active)
     track.level = last_level
-    if file_exists(working_dir .. "/undo.wav") then
+    if util.file_exists(working_dir .. "/undo.wav") then
         os_capture("cp " .. working_dir .. "/undo.wav " .. track.file)
     end
 end
