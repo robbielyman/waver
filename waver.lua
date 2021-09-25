@@ -70,7 +70,6 @@ function enc(n,d)
             local min = 0
             local max = loop_end
             loop_start = util.clamp(value, min, max)
-            fn.update_loop_start()
             fn.dirty_screen(true)
         elseif keys[2] == 1 then
             -- cancel long press counter for K2
