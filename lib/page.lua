@@ -51,7 +51,7 @@ function page:song_view()
         drawsamples(track, window_start*128, window_end*128, window_length, 2 + i*waveform_height, waveform_height, i == fn.active_track() and 10 or 4 )
     end
     self:markers()
-    graphics:text(1,120,"SONG")
+    graphics:text(1,60,"SONG")
 end
 
 -- linearly map [a,b] to [x,y] without clamping outside range
