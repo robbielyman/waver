@@ -125,6 +125,7 @@ function scratch_track:undo()
     track.level = last_level
     if util.file_exists(working_dir .. "/undo.wav") then
         util.os_capture("cp " .. working_dir .. "/undo.wav " .. track.file)
+        track.waiting_for_samples = 1
     end
 end
 
