@@ -93,6 +93,7 @@ function enc(n,d)
             end
             if active_page == 1 then
                 -- Track View K2 + E2 adjusts track level
+                ignore_k2_off = true
                 local i = 0
                 local track = {}
                 if not fn.scratch_track_active() then
@@ -138,6 +139,7 @@ function enc(n,d)
             end
             if active_page == 1 then
                 -- Track View K2 + E3 adjusts track pan
+                ignore_k2_off = true
                 local track = tracks[fn.active_track()]
                 local value = track.pan + d*0.05
                 local min = -1
@@ -178,7 +180,9 @@ function key(n,z)
             clock.cancel(key_counter[n])
         end
         if n == 2 then
-            if keys[1] == 1 then
+            if ignore_k2_off then
+                ignore_k2_off = false
+            elseif keys[1] == 1 then
                 -- stop long press counter for K1
                 if key_counter[1] then
                     clock.cancel(key_counter[1])
