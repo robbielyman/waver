@@ -40,6 +40,11 @@ function page:track_view()
         drawsamples(scratch_track, window_start*128, window_end*128, window_length, 2 + 4 * waveform_height, waveform_height, fn.scratch_track_active() and 10 or 4)
     end
     self:markers()
+    graphics:text(1,60,"TRACK")
+    local track = tracks[fn.active_track()]
+    graphics:text(20,60,"level " .. track.id .. ": " .. string.format("%.2f", track.level))
+    graphics:text(60,60, "pan: " .. string.format("%.2f",track.pan))
+    graphics:text(80,60, "scratch level: " .. string.format("%.2f",scratch_track.level))
 end
 
 function page:song_view()
