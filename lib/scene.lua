@@ -34,7 +34,7 @@ function scene.init()
             if fn.looping() and loop_start <= position and position <= loop_end then
                 for i = 1, 2 do
                     softcut.loop_start(i, loop_start)
-                    softcut.loop_start(i, loop_end)
+                    softcut.loop_end(i, loop_end)
                 end
             else
                 for i = 1, 2 do
