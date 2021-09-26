@@ -63,10 +63,10 @@ function page:markers()
     -- add window indicator of loop start and end
     local windowloop_start  = unsafelinlin(0, window_length, 1, 128, loop_start - window_start)
     local windowloop_end    = unsafelinlin(0, window_length, 1, 128, loop_end - window_start)
-    graphics:mlrs(windowloop_start, 2, 0, (num_tracks + 1)* waveform_height, 5)
-    graphics:rect(windowloop_start, (num_tracks + 1)* waveform_height, 2, 2, 5)
-    graphics:rect(windowloop_end-2, (num_tracks + 1)* waveform_height, 2, 2, 5)
-    graphics:mlrs(windowloop_end, 2, 0, (num_tracks + 1) * waveform_height, 5)
+    graphics:mlrs(windowloop_start, 2, 0, (num_tracks + 1)* waveform_height, fn.looping() and 5 or 1)
+    graphics:rect(windowloop_start, (num_tracks + 1)* waveform_height, 2, 2, fn.looping() and 5 or 1)
+    graphics:rect(windowloop_end-2, (num_tracks + 1)* waveform_height, 2, 2, fn.looping() and 5 or 1)
+    graphics:mlrs(windowloop_end, 2, 0, (num_tracks + 1) * waveform_height, fn.looping() and 5 or 1)
     -- calculate playhead position in pixels
     -- and display playhead in window
     local window_playhead = unsafelinlin(0, window_length, 1, 128, playhead - window_start)
