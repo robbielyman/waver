@@ -218,6 +218,7 @@ function long_press(n)
             -- active_page = 2
         elseif active_page == 1 then
             -- Track View Long K1 loads sample.
+            keys[1] = 0
             fileselect.enter(_path.dust, function(file)
                 scratch_track:load(file)
                 selecting = false
