@@ -5,15 +5,29 @@
 --
 -- @alanza
 -- v0.1
-
--- TODO: comment these before pushing!
--- softcut = {}
--- screen = {}
--- audio = {}
--- util = {}
--- metro = {}
--- include = require
--- clock = {}
+--    ▼ instructions below ▼
+--
+-- E1 scrolls the window
+-- E2 zooms in and out
+-- E3 selects the active track
+-- K1 + E1 scrolls playhead
+-- K1 + E2 scrolls loop start
+-- K1 + E3 scrolls loop end
+-- K2 toggles playback
+-- K3 toggles looping
+--
+-- SONG VIEW
+-- K1 + K3 enters track view
+-- K1 + K2 "undo" to track view
+--
+-- TRACK VIEW
+-- long K1 loads sample
+-- long K2 cuts at loop marker
+-- long K3 pastes at playhead
+-- K2 + E2 adjusts level
+-- K2 + E3 adjusts pan
+-- K1 + K2 "discard" to song view
+-- K1 + K3 "commit" to song view
 
 include("waver/lib/includes")
 
