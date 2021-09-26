@@ -201,7 +201,11 @@ function key(n,z)
                 end
             elseif keys[1] == 0 then
                 -- short K3 toggles looping
-                fn.looping(fn.looping() and false or true)
+                if fn.looping() then
+                    fn.looping(false)
+                else 
+                    fn.looping(true)
+                end
             end
         end
     end
