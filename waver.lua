@@ -45,6 +45,7 @@ function init()
     counters.init()
     redraw_clock_id = clock.run(counters.redraw_clock)
     keys, key_counter = {0,0,0}, {{}, {}, {}}
+    ignore_k2_off = false
     selecting = false
     last_active, last_level = 1, 1
 end
