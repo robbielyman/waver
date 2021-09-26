@@ -42,9 +42,9 @@ function page:track_view()
     self:markers()
     graphics:text(1,60,"TRACK")
     local track = tracks[fn.active_track()]
-    graphics:text(25,60,"l " .. track.id .. ": " .. string.format("%.2f", track.level))
-    graphics:text(70,60, "p: " .. string.format("%.2f",track.pan))
-    graphics:text(100,60, "s l: " .. string.format("%.2f",scratch_track.level))
+    graphics:text(30,60,"l " .. track.id .. ": " .. string.format("%.2f", track.level))
+    graphics:text(65,60, "p: " .. string.format("%.2f",track.pan))
+    graphics:text(95,60, "s l: " .. string.format("%.2f",scratch_track.level))
 end
 
 function page:song_view()
