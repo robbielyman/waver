@@ -13,3 +13,5 @@ counters = include(lib .. "counters")
 graphics = include(lib .. "graphics")
 
 fileselect = require("fileselect")
+
+textentry = require("textentry")

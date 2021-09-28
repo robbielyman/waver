@@ -32,7 +32,6 @@ function Track:buffer_render()
     fn.dirty_scene(true)
 end
 
-
 function Track:new(file, level, pan, id)
     local t = setmetatable({}, { __index = Track })
     t.file = file
@@ -54,6 +53,19 @@ function tracks.init()
         tracks[i] = Track:new(working_dir .. "/track_" .. i ..".wav",1,0,i)
     end
     scratch_track.waiting_for_samples = 0
+end
+
+function tracks.save(file)
+    if not file then
+        return
+    end
+    local filenamebase = _path.dust .. "audio/tape/" .. file
+    scene:song_view()
+    softcut.buffer_write_stereo(filenamebase .. ".wav", 0, -1)
+    for i,track in ipairs(tracks) do
+        util.os_capture("cp " .. track.file .. " " .. filenamebase .. "_track_" .. i .. ".wav")
+    end
+    fn.dirty_scene(true)
 end
 
 function scratch_track:load(file)

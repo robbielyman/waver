@@ -17,6 +17,7 @@
 -- K3 toggles looping
 --
 -- SONG VIEW
+-- long K1 saves track
 -- K1 + K3 enters track view
 -- K1 + K2 "undo" to track view
 --
@@ -237,8 +238,9 @@ function long_press(n)
     if n == 1 then
         if active_page == 0 then
             -- Song View Long K1 enters menu
-            -- TODO: implement menu
-            -- active_page = 2
+            fn.playing(false)
+            selecting = true
+            textentry.enter(tracks.save, "song", "filename")
         elseif active_page == 1 then
             -- Track View Long K1 loads sample.
             keys[1] = 0
