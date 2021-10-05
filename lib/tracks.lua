@@ -68,6 +68,15 @@ function tracks.save(file)
     fn.dirty_scene(true)
 end
 
+function tracks.clear_all()
+    softcut.buffer_read_mono(tracks[1].file,0,0,-1,1,1,0,0)
+    for _,track in ipairs(tracks) do
+        softcut.buffer_write_mono(track.file)
+        track.level = 1
+        track.pan = 0
+    end
+end
+
 function scratch_track:load(file)
     if file == "cancel" then
         return

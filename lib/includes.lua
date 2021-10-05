@@ -12,6 +12,8 @@ counters = include(lib .. "counters")
 
 graphics = include(lib .. "graphics")
 
+parameters = include(lib .. "parameters")
+
 fileselect = require("fileselect")
 
 textentry = require("textentry")

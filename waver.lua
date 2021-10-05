@@ -33,6 +33,7 @@
 include("waver/lib/includes")
 
 function init()
+    parameters.init()
     loop_start = 0
     loop_end = 30
     active_page = 0
@@ -277,5 +278,4 @@ function cleanup()
     clock.cancel(redraw_clock_id)
     metro.free_all()
     softcut.poll_stop_phase()
-    print("byyyyeeee")
 end
