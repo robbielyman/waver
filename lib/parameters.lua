@@ -19,7 +19,7 @@ function parameters.init()
         action = function(_) fn.dirty_scene(true) end,
     }
 
-    params:adde_separator(" ! w a r n i n g ! ")
+    params:add_separator(" ! w a r n i n g ! ")
 
     params:add_trigger("clearall", "clear all tracks")
     params:set_action("clearall", function(_)
