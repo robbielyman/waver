@@ -74,6 +74,7 @@ function tracks.clear_all()
         softcut.buffer_write_mono(track.file, 0, -1, 1)
         track.level = 1
         track.pan = 0
+        track.samples = {}
     end
     fn.dirty_scene(true)
     fn.dirty_screen(true)
