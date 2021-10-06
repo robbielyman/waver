@@ -94,7 +94,7 @@ function page:barlines()
         local window_beat = unsafelinlin(0, window_length, 1, 128, interval * (i - beats) - window_start)
         graphics:mlrs(window_beat, 2, 0, 5, 1)
         if i % beats == 0 then
-            graphics:text(window_beat + 1, 6, string.format("%d",i / beats), 1)
+            graphics:text(window_beat + 2, 8, string.format("%d",i / beats), 1)
         end
     end
 end
