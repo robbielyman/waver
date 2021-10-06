@@ -87,14 +87,14 @@ function page:barlines()
     local max_beats = 6*params:get("tempo") + beats
     local skipping = (window_length / interval) > 16
     local skip = beats
-    while skipping and (window_length / (interval * skip)) > 16 do
+    while skipping and (window_length / (interval * skip)) > 8 do
         skip = skip * 2
     end
     for i = beats,max_beats,skipping and skip or 1 do
         local window_beat = unsafelinlin(0, window_length, 1, 128, interval * (i - beats) - window_start)
         graphics:mlrs(window_beat, 2, 0, 5, 1)
         if i % beats == 0 then
-            graphics:text(window_beat + 1, 10, string.format("%3d",i / beats), 1)
+            graphics:text(window_beat + 1, 10, string.format("%d",i / beats), 1)
         end
     end
 end
