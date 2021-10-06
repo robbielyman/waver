@@ -3,7 +3,7 @@
 -- assemble tracks from TAPE
 -- into a song.
 --
--- @alanza
+-- @alanza llllllll.co/t/waver
 -- v0.1
 --    ▼ instructions below ▼
 --
