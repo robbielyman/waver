@@ -85,7 +85,7 @@ function page:barlines()
     local interval  = 60/params:get("tempo")
     local beats     = params:get("beats")
     local max_beats = 6*params:get("tempo") + beats
-    for i = beats,maxbeats do
+    for i = beats,max_beats do
         local window_beat = unsafelinlin(0, window_length, 1, 128, interval * (i - beats) - window_start)
         graphics:mlrs(window_beat, 2, 0, 5, 1)
         if i % beats == 0 then
