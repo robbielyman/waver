@@ -75,6 +75,8 @@ function tracks.clear_all()
         track.level = 1
         track.pan = 0
     end
+    fn.dirty_scene(true)
+    fn.dirty_screen(true)
 end
 
 function scratch_track:load(file)
