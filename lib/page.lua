@@ -39,6 +39,7 @@ function page:track_view()
     if scratch_track then
         drawsamples(scratch_track, window_start*128, window_end*128, window_length, 2 + 4 * waveform_height, waveform_height, fn.scratch_track_active() and 10 or 4)
     end
+    self:barlines()
     self:markers()
     graphics:text(1,60,"TRACK")
     local track = tracks[fn.active_track()]
@@ -55,6 +56,7 @@ function page:song_view()
     for i, track in ipairs(tracks) do
         drawsamples(track, window_start*128, window_end*128, window_length, 2 + i*waveform_height, waveform_height, i == fn.active_track() and 10 or 4 )
     end
+    self:barlines()
     self:markers()
     graphics:text(1,60,"SONG")
 end
@@ -77,6 +79,19 @@ function page:markers()
     -- and display playhead in window
     local window_playhead = unsafelinlin(0, window_length, 1, 128, playhead - window_start)
     graphics:mlrs(window_playhead, 2, 0, (num_tracks + 1) * waveform_height)
+end
+
+function page:barlines()
+    local interval  = 60/params:get("tempo")
+    local beats     = params:get("beats")
+    local max_beats = 6*params:get("tempo") + beats
+    for i = beats,maxbeats do
+        local window_beat = unsafelinlin(0, window_length, 1, 128, interval * (i - beats) - window_start)
+        graphics:mlrs(window_beat, 2, 0, 5, 1)
+        if i % beats == 0 then
+            graphics:text(window_beat + 1, 4, i / beats, 1)
+        end
+    end
 end
 
 function page:render()
