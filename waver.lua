@@ -96,20 +96,11 @@ function enc(n,d)
             if active_page == 1 then
                 -- Track View K2 + E2 adjusts track level
                 ignore_k2_off = true
-                local i = 0
-                local track = {}
                 if not fn.scratch_track_active() then
-                    track = tracks[fn.active_track()]
-                    i = 1
+                    params:delta("track_level_" .. fn.active_track(), d)
                 else
-                    track = scratch_track
-                    i = 2
+                    params:delta("scratch_level", d)
                 end
-                local value = track.level + d*0.05
-                local min = 0
-                local max = 1
-                track.level = util.clamp(value, min, max)
-                softcut.level(i, track.level)
             end
         else
             -- E2 zooms in and out
@@ -142,15 +133,11 @@ function enc(n,d)
             if active_page == 1 then
                 -- Track View K2 + E3 adjusts track pan
                 ignore_k2_off = true
-                local track = tracks[fn.active_track()]
-                local value = track.pan + d*0.05
-                local min = -1
-                local max = 1
-                track.pan = util.clamp(value, min, max)
+                params:delta("track_pan_" .. fn.active_track(), d)
                 for i = 1, 2 do
-                    softcut.pan(i, track.pan)
+                    softcut.pan(i, tracks[fn.active_track()].pan)
                 end
-                scratch_track.pan = track.pan
+                scratch_track.pan = tracks[fn.active_track()].pan
             end
         else
             if active_page == 1 then
@@ -239,6 +226,7 @@ function long_press(n)
     if n == 1 then
         if active_page == 0 then
             -- Song View Long K1 enters menu
+            keys[1] = 0
             fn.playing(false)
             selecting = true
             textentry.enter(tracks.save, "song", "filename")

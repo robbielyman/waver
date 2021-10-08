@@ -30,25 +30,32 @@ function parameters.init()
 
     local vol = controlspec.new(0, 1.25, "lin", 0, 1)
     for i = 1,num_tracks do
-        params:add_control("track" .. i .. "vol", "track " .. i .. " volume", vol)
-        params:set_action("track" .. i .. "vol", function(x)
+        params:add_group("track " .. i,3)
+        params:add_control("track_level_" .. i, "level", vol)
+        params:set_action("track_level_" .. i, function(x)
             tracks[i].level = x
             fn.dirty_scene(true)
             fn.dirty_screen(true)
         end)
-        params:add_control("track" .. i .. "pan", "track " .. i .. " pan", controlspec.PAN)
-        params:set_action("track" .. i .. "pan", function(x)
+        params:add_control("track_pan_" .. i, "pan", controlspec.PAN)
+        params:set_action("track_pan_" .. i, function(x)
             tracks[i].pan = x
             fn.dirty_scene(true)
             fn.dirty_screen(true)
         end)
-        params:add_binary("track" .. i .."mute", "track " .. i .. " mute", "toggle", 0)
-        params:set_action("track" .. i .. "mute", function(x) 
-            tracks[i].mute = x == 0 and 1 or 0 
+        params:add_binary("track_mute_" .. i, "mute", "toggle", 0)
+        params:set_action("track_mute_" .. i, function(x)
+            tracks[i].mute = x == 0 and 1 or 0
             fn.dirty_scene(true)
             fn.dirty_screen(true)
         end)
     end
+    params:add_control("scratch_level", "scratch track level", vol)
+    params:set_action("scratch_level", function(x)
+        scratch_track.level = x
+        fn.dirty_scene(true)
+        fn.dirty_screen(true)
+    end)
 
     params:add_separator(" ! w a r n i n g ! ")
 
