@@ -1,7 +1,9 @@
 fn = {}
 
 function fn.init()
-    print("functions_init finished")
+    scene_dirty = true
+    screen_dirty = true
+    location = 0
 end
 
 function fn.dirty_screen(bool)
@@ -12,6 +14,9 @@ end
 
 function fn.dirty_scene(bool)
     if bool == nil then return scene_dirty end
+    if bool then
+        location = playhead + 0.07
+    end
     scene_dirty = bool
     return scene_dirty
 end

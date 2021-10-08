@@ -40,7 +40,9 @@ function counters.redraw_clock()
         end
         if fn.dirty_scene() then
             redraw_scene()
-            fn.dirty_scene(false)
+            if playhead > location then
+                fn.dirty_scene(false)
+            end
         end
         clock.sleep(1 / counters.ui.fps)
     end
