@@ -15,7 +15,7 @@ end
 function fn.dirty_scene(bool)
     if bool == nil then return scene_dirty end
     if bool then
-        location = playhead + 0.15
+        location = playhead + 0.25
     end
     scene_dirty = bool
     return scene_dirty
