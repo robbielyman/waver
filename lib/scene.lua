@@ -75,17 +75,35 @@ function scene:track_view(start, dur)
 end
 
 function scene:render()
-    if is_playing and playhead <= location then
-        if active_page == 0 then
-            self:song_view(location, -1)
-        elseif active_page == 1 then
-            self:track_view(location, -1)
+    if active_page == 0 then
+        if not is_playing then
+            self:song_view(0,-1)
+        else
+            if playhead <= location then
+                if fn.looping() and location >= loop_end then
+                    location = 0
+                    self:song_view(0,-1)
+                else
+                    self:song_view(location, -1)
+                end
+            else
+                self:song_view(0,location)
+            end
         end
-    elseif is_playing and playhead > location then
-        if active_page == 0 then
-            self:song_view(0, location)
-        elseif active_page == 1 then
-            self:track_view(0, location)
+    elseif active_page == 1 then
+        if not is_playing then
+            self:track_view(0,-1)
+        else
+            if playhead <= location then
+                if fn.looping() and location >= loop_end then
+                    location = 0
+                    self:track_view(0,-1)
+                else
+                    self:track_view(location,-1)
+                end
+            else
+                self:track_view(0,location)
+            end
         end
     end
     softcut.play(1,is_playing and 1 or 0)
