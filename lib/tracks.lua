@@ -92,12 +92,12 @@ end
 function scratch_track:cut()
     if self.file == "" then return end
     softcut.buffer_read_mono(self.file,0,0,-1,1,2,0,self.level)
-    softcut.buffer_clear_region_channel(2,loop_end,-1,0.01,0)
     softcut.buffer_write_mono(working_dir .. "/cut.wav",loop_start,loop_end - loop_start,2)
     self.file = ""
     self.samples = {}
     self.level = 1
     fn.dirty_scene(true)
+    location = 0
 end
 
 function scratch_track:paste()
