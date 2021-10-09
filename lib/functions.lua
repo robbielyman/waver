@@ -28,10 +28,13 @@ function fn.active_track(track)
 end
 
 function fn.toggle_playback()
-    if is_playing == true then  
-        is_playing = false 
-    else    
+    if is_playing == true then
+        is_playing = false
+    else
         is_playing = true
+    end
+    for i = 1,2 do
+        softcut.play(i, is_playing and 1 or 0)
     end
 end
 

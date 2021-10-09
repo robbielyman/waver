@@ -109,8 +109,6 @@ function scene:render()
             end
         end
     end
-    softcut.play(1,is_playing and 1 or 0)
-    softcut.play(2,is_playing and 1 or 0)
 end
 
 return scene

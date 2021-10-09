@@ -67,7 +67,13 @@ function enc(n,d)
             local max = track_length
             playhead = util.clamp(value, min, max)
             for i = 1, 2 do
+                if not fn.playing() then
+                    softcut.play(i, 1)
+                end
                 softcut.position(i, playhead)
+                if not fn.playing() then
+                    softcut.play(i, 0)
+                end
             end
             fn.dirty_screen(true)
         elseif keys[1] == 0 then
@@ -192,7 +198,6 @@ function key(n,z)
             elseif keys[1] == 0 then
                 -- short K2 toggles playback
                 fn.toggle_playback()
-                fn.dirty_scene(true)
             end
         elseif n == 3 then
             if keys[1] == 1 then
