@@ -45,7 +45,6 @@ function init()
     active_track, active_scratch_track = 1, false
     page.init()
     tracks.init()
-    init_active = false
     counters.init()
     redraw_clock_id = clock.run(counters.redraw_clock)
     keys, key_counter = {0,0,0}, {{}, {}, {}}

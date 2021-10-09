@@ -50,13 +50,7 @@ function tracks.init()
     fn.dirty_scene(true)
     callback_inactive = true
     for i = 1, num_tracks do
-        tracks[i] = Track:new(working_dir .. "/track_" .. i ..".wav",1,0,i)
-        while tracks[i].waiting_for_samples > 0 do
-            print("trying to load samples")
-            if callback_inactive then
-                tracks[i]:buffer_render()
-            end
-        end
+        tracks[i] = Track:new(working_dir .. "/track_" .. i .. ".wav", 1, 0, i)
     end
     scratch_track.waiting_for_samples = 0
 end
