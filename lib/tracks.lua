@@ -12,8 +12,8 @@ Track = {
 
 function Track:buffer_render()
     callback_inactive = false
-    softcut.buffer_clear()
-    softcut.buffer_read_mono(self.file,0,0,-1,1,1,0,self.level)
+    softcut.buffer_clear_region_channel(1, (self.waiting_for_samples - 1)*60, 60, 0, 0)
+    softcut.buffer_read_mono(self.file,(self.waiting_for_samples - 1)*60,(self.waiting_for_samples - 1)*60,60,1,1,0,self.level)
     softcut.event_render(function(_,_,_,samples)
         if not callback_inactive then
             if self.waiting_for_samples == 1 then
