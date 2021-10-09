@@ -102,7 +102,7 @@ end
 function page:init_popup()
     graphics:rect(43, 29, 42, 10, 5)
     graphics:rect(44, 30, 40, 8, 0)
-    graphics:text(45, 31, "loading...", 16)
+    graphics:text(45, 43, "loading...", 16)
 end
 
 function page:render()
