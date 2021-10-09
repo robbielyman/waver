@@ -82,10 +82,11 @@ function scene:render()
             if playhead <= location then
                 if fn.looping() and location >= loop_end then
                     location = 0
-                    self:song_view(0,-1)
                 else
                     self:song_view(location, -1)
                 end
+            elseif location == 0 then
+                self:song_view(0,-1)
             else
                 self:song_view(0,location)
             end
@@ -97,10 +98,11 @@ function scene:render()
             if playhead <= location then
                 if fn.looping() and location >= loop_end then
                     location = 0
-                    self:track_view(0,-1)
                 else
                     self:track_view(location,-1)
                 end
+            elseif location == 0 then
+                self:song_view(0,-1)
             else
                 self:track_view(0,location)
             end
