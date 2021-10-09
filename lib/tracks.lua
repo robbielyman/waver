@@ -16,7 +16,6 @@ function Track:buffer_render()
     softcut.buffer_read_mono(self.file,0,0,-1,1,1,0,self.level)
     softcut.event_render(function(_,_,_,samples)
         if not callback_inactive then
-            print("track " .. self.id .. " got a callback for render call " .. self.waiting_for_samples)
             if self.waiting_for_samples == 1 then
                 self.samples = samples
             else
