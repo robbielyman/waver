@@ -33,6 +33,7 @@
 include("waver/lib/includes")
 
 function init()
+    init_active = true
     loop_start = 0
     loop_end = 30
     active_page = 0
@@ -40,10 +41,11 @@ function init()
     num_tracks = 4
     parameters.init()
     track_length = 5*60
-    tracks.init()
     fn.init()
     active_track, active_scratch_track = 1, false
     page.init()
+    tracks.init()
+    init_active = false
     counters.init()
     redraw_clock_id = clock.run(counters.redraw_clock)
     keys, key_counter = {0,0,0}, {{}, {}, {}}
@@ -53,6 +55,7 @@ function init()
 end
 
 function enc(n,d)
+    if init_active then return end
     if n == 1 then
         if keys[1] == 1 then
             -- cancel long press counter for K1
@@ -160,6 +163,7 @@ function enc(n,d)
 end
 
 function key(n,z)
+    if init_active then return end
     keys[n] = z
     if z == 1 then
         -- start long-press counter

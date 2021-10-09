@@ -25,12 +25,10 @@ function Track:buffer_render()
                 end
             end
             self.waiting_for_samples = self.waiting_for_samples == 5 and -1 or self.waiting_for_samples + 1
-            fn.dirty_scene(true)
             callback_inactive = true
         end
     end)
     softcut.render_buffer(1,(self.waiting_for_samples -1)*60 ,(self.waiting_for_samples)*60,60*128)
-    fn.dirty_scene(true)
 end
 
 function Track:new(file, level, pan, id)
@@ -53,6 +51,11 @@ function tracks.init()
     callback_inactive = true
     for i = 1, num_tracks do
         tracks[i] = Track:new(working_dir .. "/track_" .. i ..".wav",1,0,i)
+        while tracks[i].waiting_for_samples > 0 do
+            if callback_inactive then
+                tracks[i]:buffer_render()
+            end
+        end
     end
     scratch_track.waiting_for_samples = 0
 end
