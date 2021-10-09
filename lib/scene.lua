@@ -50,6 +50,7 @@ function scene.init()
 end
 
 function scene:song_view(start, dur)
+    print("song_view(".. start .. ", " .. dur .. ")")
     softcut.buffer_clear_region(start, dur, 0, 0)
     for _, track in ipairs(tracks) do
         local theta = math.pi/4 * (track.pan + 1)
