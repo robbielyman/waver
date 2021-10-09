@@ -33,9 +33,6 @@ function fn.toggle_playback()
     else
         is_playing = true
     end
-    for i = 1,2 do
-        softcut.play(i, is_playing and 1 or 0)
-    end
 end
 
 function fn.playing(bool)

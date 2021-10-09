@@ -48,7 +48,7 @@ function init()
     counters.init()
     redraw_clock_id = clock.run(counters.redraw_clock)
     keys, key_counter = {0,0,0}, {{}, {}, {}}
-    ignore_k2_off = false
+    ignore_k2_off, ignore_k3_off = false, false
     selecting = false
     last_active, last_level = 1, 1
 end
@@ -198,9 +198,12 @@ function key(n,z)
             elseif keys[1] == 0 then
                 -- short K2 toggles playback
                 fn.toggle_playback()
+                fn.dirty_scene(true)
             end
         elseif n == 3 then
-            if keys[1] == 1 then
+            if ignore_k3_off then
+                ignore_k3_off = false
+            elseif keys[1] == 1 then
                 -- stop long press counter for K1
                 if key_counter[1] then
                     clock.cancel(key_counter[1])
@@ -250,10 +253,12 @@ function long_press(n)
     elseif n == 2 then
         if active_page == 1 then
             scratch_track:cut()
+            ignore_k2_off = true
         end
     elseif n == 3 then
         if active_page == 1 then
             scratch_track:paste()
+            ignore_k3_off = true
         end
     end
 end
