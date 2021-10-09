@@ -25,7 +25,9 @@ function counters.sceneminder()
     for _, track in ipairs(tracks) do
         if track.waiting_for_samples > 0 and callback_inactive then
             track:buffer_render()
-            if not init_active then fn.dirty_scene(true) end
+            if init_active == false then
+                fn.dirty_scene(true)
+            end
         end
     end
     if init_active then
