@@ -53,8 +53,8 @@ function scene:song_view(start, dur)
     softcut.buffer_clear_region(start, dur, 0, 0)
     for _, track in ipairs(tracks) do
         local theta = math.pi/4 * (track.pan + 1)
-        local left = track.level * math.cos(theta)
-        local right = track.level * math.sin(theta)
+        local left = track.mute * track.level * math.cos(theta)
+        local right = track.mute * track.level * math.sin(theta)
         softcut.buffer_read_mono(track.file, start, start, dur, 1, 1, 1, left)
         softcut.buffer_read_mono(track.file, start, start, dur, 1, 2, 1, right)
     end
@@ -65,7 +65,7 @@ end
 function scene:track_view(start, dur)
     softcut.buffer_clear_region(start, dur, 0, 0)
     local track = tracks[fn.active_track()]
-    softcut.buffer_read_mono(track.file, start, start, dur, 1, 1, 0, track.level)
+    softcut.buffer_read_mono(track.file, start, start, dur, 1, 1, 0, track.mute * track.level)
     if scratch_track.file ~= "" then
         softcut.buffer_read_mono(scratch_track.file, start, start, dur, 1, 2, 0, scratch_track.level)
     end

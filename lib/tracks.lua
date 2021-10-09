@@ -5,6 +5,7 @@ Track = {
     level = 1,
     pan = 0,
     id = 0,
+    mute = 1,
     waiting_for_samples = -1,
     samples = {}
 }
@@ -38,6 +39,7 @@ function Track:new(file, level, pan, id)
     t.level = level
     t.pan = pan
     t.id = id
+    t.mute = 1
     t.waiting_for_samples = 1
     return t
 end

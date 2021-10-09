@@ -27,7 +27,7 @@ local function drawsamples(track, start, finish, step, center, scale, brightness
         local t = track.samples[index + 1] or 0
         local preheight = s*(1-weight) + t*weight
         local height = util.round(math.abs(preheight) * scale * track.level)
-        graphics:mlrs(x_pos,center - height, 0, 2*height, brightness)
+        graphics:mlrs(x_pos,center - height, 0, 2*height, brightness and track.mute == 1 or 1)
         x_pos = x_pos + 1
     end
 end

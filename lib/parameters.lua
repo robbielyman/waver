@@ -40,20 +40,26 @@ function parameters.init()
                 if debounce_level[i] then
                     clock.cancel(debounce_level[i])
                     debounce_level[i] = nil
-                    print("debouncing")
                 end
-                clock.sleep(0.5)
+                clock.sleep(0.25)
                 fn.dirty_scene(true)
                 fn.dirty_screen(true)
-                print("calling dirty scene")
             end)
             debounce_level[i] = temp
         end)
         params:add_control("track_pan_" .. i, "pan", controlspec.PAN)
         params:set_action("track_pan_" .. i, function(x)
             tracks[i].pan = x
-            fn.dirty_scene(true)
-            fn.dirty_screen(true)
+            local temp = clock.run(function()
+                if debounce_pan[i] then
+                    clock.cancel(debounce_pan[i])
+                    debounce_pan[i] = nil
+                end
+                clock.sleep(0.25)
+                fn.dirty_scene(true)
+                fn.dirty_screen(true)
+            end)
+            debounce_pan[i] = temp
         end)
         params:add_binary("track_mute_" .. i, "mute", "toggle", 0)
         params:set_action("track_mute_" .. i, function(x)
