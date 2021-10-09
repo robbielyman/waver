@@ -27,7 +27,7 @@ local function drawsamples(track, start, finish, step, center, scale, brightness
         local t = track.samples[index + 1] or 0
         local preheight = s*(1-weight) + t*weight
         local height = util.round(math.abs(preheight) * scale * track.level)
-        graphics:mlrs(x_pos,center - height, 0, 2*height, brightness)
+        graphics:mlrs(x_pos,center - height, 0, 2*height, track.mute == 1 and brightness or 1)
         x_pos = x_pos + 1
     end
 end
@@ -99,6 +99,12 @@ function page:barlines()
     end
 end
 
+function page:init_popup()
+    graphics:rect(43, 29, 42, 10, 5)
+    graphics:rect(44, 30, 40, 8, 0)
+    graphics:text(45, 36, "loading...", 16)
+end
+
 function page:render()
     graphics:setup()
     if active_page ==0 then
@@ -106,6 +112,9 @@ function page:render()
     end
     if active_page == 1 then
         self:track_view()
+    end
+    if init_active then
+        self:init_popup()
     end
     graphics:teardown()
 end
@@ -115,6 +124,7 @@ function page.init()
     waveform_pos = 10
     window_length = 30
     window_start = 0
+    page:render()
 end
 
 return page

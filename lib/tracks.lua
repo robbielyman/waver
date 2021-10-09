@@ -5,6 +5,7 @@ Track = {
     level = 1,
     pan = 0,
     id = 0,
+    mute = 1,
     waiting_for_samples = -1,
     samples = {}
 }
@@ -15,7 +16,6 @@ function Track:buffer_render()
     softcut.buffer_read_mono(self.file,0,0,-1,1,1,0,self.level)
     softcut.event_render(function(_,_,_,samples)
         if not callback_inactive then
-            print("track " .. self.id .. " got a callback for render call " .. self.waiting_for_samples)
             if self.waiting_for_samples == 1 then
                 self.samples = samples
             else
@@ -24,12 +24,10 @@ function Track:buffer_render()
                 end
             end
             self.waiting_for_samples = self.waiting_for_samples == 5 and -1 or self.waiting_for_samples + 1
-            fn.dirty_scene(true)
             callback_inactive = true
         end
     end)
     softcut.render_buffer(1,(self.waiting_for_samples -1)*60 ,(self.waiting_for_samples)*60,60*128)
-    fn.dirty_scene(true)
 end
 
 function Track:new(file, level, pan, id)
@@ -38,6 +36,7 @@ function Track:new(file, level, pan, id)
     t.level = level
     t.pan = pan
     t.id = id
+    t.mute = 1
     t.waiting_for_samples = 1
     return t
 end
@@ -50,7 +49,7 @@ function tracks.init()
     fn.dirty_scene(true)
     callback_inactive = true
     for i = 1, num_tracks do
-        tracks[i] = Track:new(working_dir .. "/track_" .. i ..".wav",1,0,i)
+        tracks[i] = Track:new(working_dir .. "/track_" .. i .. ".wav", 1, 0, i)
     end
     scratch_track.waiting_for_samples = 0
 end
@@ -93,12 +92,12 @@ end
 function scratch_track:cut()
     if self.file == "" then return end
     softcut.buffer_read_mono(self.file,0,0,-1,1,2,0,self.level)
-    softcut.buffer_clear_region_channel(2,loop_end,-1,0.01,0)
     softcut.buffer_write_mono(working_dir .. "/cut.wav",loop_start,loop_end - loop_start,2)
     self.file = ""
     self.samples = {}
     self.level = 1
     fn.dirty_scene(true)
+    location = 0
 end
 
 function scratch_track:paste()
