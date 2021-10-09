@@ -60,8 +60,6 @@ function scene:song_view(start, dur)
     end
     softcut.pan(1,-1)
     softcut.pan(2,1)
-    softcut.play(1,is_playing and 1 or 0)
-    softcut.play(2, is_playing and 1 or 0)
 end
 
 function scene:track_view(start, dur)
