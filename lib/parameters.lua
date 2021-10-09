@@ -1,6 +1,8 @@
 parameters = {}
 
 function parameters.init()
+    debounce_level = {}
+    debounce_pan = {}
     params:add_separator(" ~ w a v e r ~ ")
 
     params:add_trigger("save", "save track")
@@ -34,18 +36,18 @@ function parameters.init()
         params:add_control("track_level_" .. i, "level", vol)
         params:set_action("track_level_" .. i, function(x)
             tracks[i].level = x
-            local debounce = nil
             local temp = clock.run(function()
-                if debounce then
-                    clock.cancel(debounce)
-                    debounce = nil
+                if debounce_level[i] then
+                    clock.cancel(debounce_level[i])
+                    debounce_level[i] = nil
+                    print("debouncing")
                 end
                 clock.sleep(0.5)
                 fn.dirty_scene(true)
                 fn.dirty_screen(true)
                 print("calling dirty scene")
             end)
-            debounce = temp
+            debounce_level[i] = temp
         end)
         params:add_control("track_pan_" .. i, "pan", controlspec.PAN)
         params:set_action("track_pan_" .. i, function(x)
