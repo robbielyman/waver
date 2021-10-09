@@ -34,12 +34,18 @@ function parameters.init()
         params:add_control("track_level_" .. i, "level", vol)
         params:set_action("track_level_" .. i, function(x)
             tracks[i].level = x
-            clock.run(function()
+            local debounce = nil
+            local temp = clock.run(function()
+                if debounce then
+                    clock.cancel(debounce)
+                    debounce = nil
+                end
                 clock.sleep(0.5)
                 fn.dirty_scene(true)
                 fn.dirty_screen(true)
                 print("calling dirty scene")
             end)
+            debounce = temp
         end)
         params:add_control("track_pan_" .. i, "pan", controlspec.PAN)
         params:set_action("track_pan_" .. i, function(x)
