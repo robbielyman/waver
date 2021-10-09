@@ -198,7 +198,7 @@ function key(n,z)
             elseif keys[1] == 0 then
                 -- short K2 toggles playback
                 fn.toggle_playback()
-                fn.dirty_scene(true)
+                if not fn.playing() then fn.dirty_scene(true) end
             end
         elseif n == 3 then
             if ignore_k3_off then
