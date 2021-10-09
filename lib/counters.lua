@@ -37,6 +37,7 @@ function counters.sceneminder()
         end
         if finished then
             init_active = false
+            fn.dirty_scene(true)
         end
     end
     if scratch_track.waiting_for_samples > 0 and callback_inactive then
