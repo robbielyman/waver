@@ -4,7 +4,7 @@
 -- into a song.
 --
 -- @alanza llllllll.co/t/waver
--- v0.1
+-- v0.2.5
 --    ▼ instructions below ▼
 --
 -- E1 scrolls the window
