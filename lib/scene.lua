@@ -114,13 +114,20 @@ end
 
 function scene:record_arm(bool)
     rec_armed = bool
-    softcut.rec(2,not bool and 0 or 1)
-    audio.level_adc_cut(not bool and 0 or 1)
-    softcut.level_input_cut(1, 2, not bool and 0 or 1)
-    softcut.level_input_cut(2, 2, not bool and 0 or 1)
-    softcut.pre_level(2, 1)
-    softcut.rec_level(2, not bool and 0 or 1)
-    if not bool then
+    if bool then
+        softcut.rec(2, 1)
+        audio.level_adc_cut(1)
+        softcut.level_input_cut(1, 2, 1)
+        softcut.level_input_cut(2, 2, 1)
+        softcut.pre_level(2, 1)
+        softcut.rec_level(2, 1)
+    else
+        softcut.rec(2, 0)
+        audio.level_adc_cut(0)
+        softcut.level_adc_cut(1, 2, 0)
+        softcut.level_adc_cut(2, 2, 0)
+        softcut.pre_level(2, 1)
+        softcut.rec_level(2, 0)
         scratch_track.waiting_for_samples = 1
     end
 end
