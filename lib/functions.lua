@@ -29,9 +29,15 @@ end
 
 function fn.toggle_playback()
     if is_playing == true then
+        if rec_armed then
+            scene:record_arm(false)
+        end
         is_playing = false
     else
         is_playing = true
+        if rec_armed then
+            softcut.rec(2, 1)
+        end
     end
     for i = 1,2 do
         softcut.play(i, is_playing and 1 or 0)

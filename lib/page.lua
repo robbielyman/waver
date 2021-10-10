@@ -41,11 +41,11 @@ function page:track_view()
     end
     self:barlines()
     self:markers()
-    graphics:text(1,60,"TRACK")
+    graphics:text(1,60,rec_armed and "REC" or "TRACK")
     local track = tracks[fn.active_track()]
-    graphics:text(30,60,"l " .. track.id .. ": " .. string.format("%.2f", track.level))
-    graphics:text(65,60, "p: " .. string.format("%.2f",track.pan))
-    graphics:text(95,60, "s l: " .. string.format("%.2f",scratch_track.level))
+    graphics:text(30,60,"L " .. track.id .. ": " .. string.format("%.2f", track.level))
+    graphics:text(65,60, "P: " .. string.format("%.2f",track.pan))
+    graphics:text(95,60, "S L: " .. string.format("%.2f",scratch_track.level))
 end
 
 function page:song_view()

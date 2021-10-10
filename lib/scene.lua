@@ -112,4 +112,18 @@ function scene:render()
     end
 end
 
+function scene:record_arm(bool)
+    rec_armed = bool
+    if fn.playing() then
+        softcut.rec(2, bool and 1 or 0)
+    end
+    audio.level_adc_cut(bool and 1 or 0)
+    softcut.level_input_cut(1, 2, bool and 1 or 0)
+    softcut.level_input_cut(2, 2, bool and 1 or 0)
+    softcut.rec_level(2, bool and 1 or 0)
+    if not bool then
+        scratch_track:rec()
+    end
+end
+
 return scene
