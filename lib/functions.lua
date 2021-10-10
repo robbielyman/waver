@@ -30,6 +30,9 @@ end
 function fn.toggle_playback()
     if is_playing == true then
         is_playing = false
+        if rec_armed then
+            scene:record_arm(false)
+        end
     else
         is_playing = true
     end

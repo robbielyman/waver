@@ -112,4 +112,14 @@ function scene:render()
     end
 end
 
+function scene:record_arm(bool)
+    rec_armed = bool
+    softcut.rec(2,bool and 1 or 0)
+    audio.level_adc_cut(bool and 1 or 0)
+    softcut.level_input_cut(1, 2, bool and 1 or 0)
+    softcut.level_input_cut(2, 2, bool and 1 or 0)
+    softcut.pre_level(2, 1)
+    softcut.rec_level(2, bool and 1 or 0)
+end
+
 return scene

@@ -29,6 +29,7 @@
 -- K2 + E3 adjusts pan
 -- K1 + K2 "discard" to song view
 -- K1 + K3 "commit" to song view
+-- K1 + K2 + K3 arm recording
 
 include("waver/lib/includes")
 
@@ -37,6 +38,7 @@ function init()
     loop_start = 0
     loop_end = 30
     active_page = 0
+    rec_armed = false
     scene.init()
     num_tracks = 4
     parameters.init()
@@ -209,10 +211,20 @@ function key(n,z)
                     clock.cancel(key_counter[1])
                 end
                 if active_page == 1 then
-                    -- Track View K1 + K3 exits to song view, saving changes
-                    scratch_track:commit()
-                    active_page = 0
-                    fn.dirty_scene(true)
+                    if keys[2] == 1 then
+                        -- stop long press counter for K2
+                        if key_counter[2] then
+                            clock.cancel(key_counter[2])
+                        end
+                        -- Track View K1 + K2 + K3 arms recording
+                        ignore_k2_off = true
+                        scene:record_arm(true)
+                    else
+                        -- Track View K1 + K3 exits to song view, saving changes
+                        scratch_track:commit()
+                        active_page = 0
+                        fn.dirty_scene(true)
+                    end
                 elseif active_page == 0 then
                     -- Song View K1 + K3 enters track view
                     scratch_track:reset()
