@@ -100,6 +100,15 @@ function scratch_track:cut()
     location = 0
 end
 
+function scratch_track:rec()
+    self.file = working_dir .. "/rec.wav"
+    softcut.buffer_write_mono(self.file,0,-1,2)
+    self.samples = {}
+    self.waiting_for_samples = 1
+    fn.dirty_scene(true)
+    fn.dirty_screen(true)
+end
+
 function scratch_track:paste()
     if not util.file_exists(working_dir .. "/cut.wav") then return end
     if self.file ~= "" then
