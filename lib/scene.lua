@@ -120,6 +120,9 @@ function scene:record_arm(bool)
     softcut.level_input_cut(2, 2, bool and 1 or 0)
     softcut.pre_level(2, 1)
     softcut.rec_level(2, bool and 1 or 0)
+    if not bool then
+        scratch_track.waiting_for_samples = 1
+    end
 end
 
 return scene
