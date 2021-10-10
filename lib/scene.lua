@@ -26,11 +26,13 @@ function scene.init()
     for i = 3, 6 do
         softcut.enable(i, 0)
     end
-    playhead = 0
+    playhead, location = 0, 0
     softcut.phase_quant(1, 1/15)
     softcut.event_phase(function(voice, position)
         if voice == 1 then
-            playhead = position
+            if fn.playing() then
+                playhead = position
+            end
             if fn.looping() and loop_start <= position and position <= loop_end then
                 for i = 1, 2 do
                     softcut.loop_start(i, loop_start)
@@ -49,25 +51,25 @@ function scene.init()
     is_looping = true
 end
 
-function scene:song_view()
-    softcut.buffer_clear()
+function scene:song_view(start, dur)
+    softcut.buffer_clear_region(start, dur, 0, 0)
     for _, track in ipairs(tracks) do
         local theta = math.pi/4 * (track.pan + 1)
-        local left = track.level * math.cos(theta)
-        local right = track.level * math.sin(theta)
-        softcut.buffer_read_mono(track.file, 0, 0, -1, 1, 1, 1, left)
-        softcut.buffer_read_mono(track.file, 0, 0, -1, 1, 2, 1, right)
+        local left = track.mute * track.level * math.cos(theta)
+        local right = track.mute * track.level * math.sin(theta)
+        softcut.buffer_read_mono(track.file, start, start, dur, 1, 1, 1, left)
+        softcut.buffer_read_mono(track.file, start, start, dur, 1, 2, 1, right)
     end
     softcut.pan(1,-1)
     softcut.pan(2,1)
 end
 
-function scene:track_view()
-    softcut.buffer_clear()
+function scene:track_view(start, dur)
+    softcut.buffer_clear_region(start, dur, 0, 0)
     local track = tracks[fn.active_track()]
-    softcut.buffer_read_mono(track.file, 0, 0, -1, 1, 1, 0, track.level)
+    softcut.buffer_read_mono(track.file, start, start, dur, 1, 1, 0, track.mute * track.level)
     if scratch_track.file ~= "" then
-        softcut.buffer_read_mono(scratch_track.file, 0, 0, -1, 1, 2, 0, scratch_track.level)
+        softcut.buffer_read_mono(scratch_track.file, start, start, dur, 1, 2, 0, scratch_track.level)
     end
     softcut.pan(1,track.pan)
     softcut.pan(2,track.pan)
@@ -75,14 +77,53 @@ function scene:track_view()
 end
 
 function scene:render()
-    if is_playing == true and active_page == 0 then
-        self:song_view()
+    if active_page == 0 then
+        if not is_playing then
+            self:song_view(0,-1)
+        else
+            if playhead <= location then
+                if fn.looping() and location >= loop_end then
+                    location = 0
+                else
+                    self:song_view(location, -1)
+                end
+            elseif location == 0 then
+                self:song_view(0,-1)
+            else
+                self:song_view(0,location)
+            end
+        end
+    elseif active_page == 1 then
+        if not is_playing then
+            self:track_view(0,-1)
+        else
+            if playhead <= location then
+                if fn.looping() and location >= loop_end then
+                    location = 0
+                else
+                    self:track_view(location,-1)
+                end
+            elseif location == 0 then
+                self:song_view(0,-1)
+            else
+                self:track_view(0,location)
+            end
+        end
     end
-    if is_playing == true and active_page == 1 then
-        self:track_view()
+end
+
+function scene:record_arm(bool)
+    rec_armed = bool
+    if fn.playing() then
+        softcut.rec(2, bool and 1 or 0)
     end
-    softcut.play(1,is_playing and 1 or 0)
-    softcut.play(2,is_playing and 1 or 0)
+    audio.level_adc_cut(bool and 1 or 0)
+    softcut.level_input_cut(1, 2, bool and 1 or 0)
+    softcut.level_input_cut(2, 2, bool and 1 or 0)
+    softcut.rec_level(2, bool and 1 or 0)
+    if not bool then
+        scratch_track:rec()
+    end
 end
 
 return scene

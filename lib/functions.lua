@@ -1,7 +1,9 @@
 fn = {}
 
 function fn.init()
-    print("functions_init finished")
+    scene_dirty = true
+    screen_dirty = true
+    location = 0
 end
 
 function fn.dirty_screen(bool)
@@ -12,6 +14,9 @@ end
 
 function fn.dirty_scene(bool)
     if bool == nil then return scene_dirty end
+    if bool then
+        location = playhead + 0.75
+    end
     scene_dirty = bool
     return scene_dirty
 end
@@ -23,10 +28,19 @@ function fn.active_track(track)
 end
 
 function fn.toggle_playback()
-    if is_playing == true then  
-        is_playing = false 
-    else    
+    if is_playing == true then
+        if rec_armed then
+            scene:record_arm(false)
+        end
+        is_playing = false
+    else
         is_playing = true
+        if rec_armed then
+            softcut.rec(2, 1)
+        end
+    end
+    for i = 1,2 do
+        softcut.play(i, is_playing and 1 or 0)
     end
 end
 

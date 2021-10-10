@@ -1,6 +1,8 @@
 parameters = {}
 
 function parameters.init()
+    debounce_level = {}
+    debounce_pan = {}
     params:add_separator(" ~ w a v e r ~ ")
 
     params:add_trigger("save", "save track")
@@ -27,6 +29,51 @@ function parameters.init()
         default = 4,
         action = function(_) fn.dirty_screen(true) end,
     }
+
+    local vol = controlspec.new(0, 1.25, "lin", 0, 1)
+    for i = 1,num_tracks do
+        params:add_group("track " .. i,3)
+        params:add_control("track_level_" .. i, "level", vol)
+        params:set_action("track_level_" .. i, function(x)
+            tracks[i].level = x
+            local temp = clock.run(function()
+                if debounce_level[i] then
+                    clock.cancel(debounce_level[i])
+                    debounce_level[i] = nil
+                end
+                clock.sleep(0.25)
+                fn.dirty_scene(true)
+                fn.dirty_screen(true)
+            end)
+            debounce_level[i] = temp
+        end)
+        params:add_control("track_pan_" .. i, "pan", controlspec.PAN)
+        params:set_action("track_pan_" .. i, function(x)
+            tracks[i].pan = x
+            local temp = clock.run(function()
+                if debounce_pan[i] then
+                    clock.cancel(debounce_pan[i])
+                    debounce_pan[i] = nil
+                end
+                clock.sleep(0.25)
+                fn.dirty_scene(true)
+                fn.dirty_screen(true)
+            end)
+            debounce_pan[i] = temp
+        end)
+        params:add_binary("track_mute_" .. i, "mute", "toggle", 0)
+        params:set_action("track_mute_" .. i, function(x)
+            tracks[i].mute = x == 0 and 1 or 0
+            fn.dirty_scene(true)
+            fn.dirty_screen(true)
+        end)
+    end
+    params:add_control("scratch_level", "scratch track level", vol)
+    params:set_action("scratch_level", function(x)
+        scratch_track.level = x
+        fn.dirty_scene(true)
+        fn.dirty_screen(true)
+    end)
 
     params:add_separator(" ! w a r n i n g ! ")
 

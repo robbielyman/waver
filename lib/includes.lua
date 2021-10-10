@@ -17,3 +17,5 @@ parameters = include(lib .. "parameters")
 fileselect = require("fileselect")
 
 textentry = require("textentry")
+
+audio = require("audio")

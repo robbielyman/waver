@@ -29,30 +29,34 @@
 -- K2 + E3 adjusts pan
 -- K1 + K2 "discard" to song view
 -- K1 + K3 "commit" to song view
+-- K1 + K2 + K3 arm recording
 
 include("waver/lib/includes")
 
 function init()
-    parameters.init()
+    init_active = true
     loop_start = 0
     loop_end = 30
     active_page = 0
+    rec_armed = false
     scene.init()
     num_tracks = 4
+    parameters.init()
     track_length = 5*60
-    tracks.init()
     fn.init()
     active_track, active_scratch_track = 1, false
     page.init()
+    tracks.init()
     counters.init()
     redraw_clock_id = clock.run(counters.redraw_clock)
     keys, key_counter = {0,0,0}, {{}, {}, {}}
-    ignore_k2_off = false
+    ignore_k2_off, ignore_k3_off = false, false
     selecting = false
     last_active, last_level = 1, 1
 end
 
 function enc(n,d)
+    if init_active then return end
     if n == 1 then
         if keys[1] == 1 then
             -- cancel long press counter for K1
@@ -65,7 +69,13 @@ function enc(n,d)
             local max = track_length
             playhead = util.clamp(value, min, max)
             for i = 1, 2 do
+                if not fn.playing() then
+                    softcut.play(i, 1)
+                end
                 softcut.position(i, playhead)
+                if not fn.playing() then
+                    softcut.play(i, 0)
+                end
             end
             fn.dirty_screen(true)
         elseif keys[1] == 0 then
@@ -96,20 +106,11 @@ function enc(n,d)
             if active_page == 1 then
                 -- Track View K2 + E2 adjusts track level
                 ignore_k2_off = true
-                local i = 0
-                local track = {}
                 if not fn.scratch_track_active() then
-                    track = tracks[fn.active_track()]
-                    i = 1
+                    params:delta("track_level_" .. fn.active_track(), d)
                 else
-                    track = scratch_track
-                    i = 2
+                    params:delta("scratch_level", d)
                 end
-                local value = track.level + d*0.05
-                local min = 0
-                local max = 1
-                track.level = util.clamp(value, min, max)
-                softcut.level(i, track.level)
             end
         else
             -- E2 zooms in and out
@@ -142,15 +143,11 @@ function enc(n,d)
             if active_page == 1 then
                 -- Track View K2 + E3 adjusts track pan
                 ignore_k2_off = true
-                local track = tracks[fn.active_track()]
-                local value = track.pan + d*0.05
-                local min = -1
-                local max = 1
-                track.pan = util.clamp(value, min, max)
+                params:delta("track_pan_" .. fn.active_track(), d)
                 for i = 1, 2 do
-                    softcut.pan(i, track.pan)
+                    softcut.pan(i, tracks[fn.active_track()].pan)
                 end
-                scratch_track.pan = track.pan
+                scratch_track.pan = tracks[fn.active_track()].pan
             end
         else
             if active_page == 1 then
@@ -173,6 +170,7 @@ function enc(n,d)
 end
 
 function key(n,z)
+    if init_active then return end
     keys[n] = z
     if z == 1 then
         -- start long-press counter
@@ -202,19 +200,31 @@ function key(n,z)
             elseif keys[1] == 0 then
                 -- short K2 toggles playback
                 fn.toggle_playback()
-                fn.dirty_scene(true)
+                if not fn.playing() then fn.dirty_scene(true) end
             end
         elseif n == 3 then
-            if keys[1] == 1 then
+            if ignore_k3_off then
+                ignore_k3_off = false
+            elseif keys[1] == 1 then
                 -- stop long press counter for K1
                 if key_counter[1] then
                     clock.cancel(key_counter[1])
                 end
                 if active_page == 1 then
-                    -- Track View K1 + K3 exits to song view, saving changes
-                    scratch_track:commit()
-                    active_page = 0
-                    fn.dirty_scene(true)
+                    if keys[2] == 1 then
+                        -- stop long press counter for K2
+                        if key_counter[2] then
+                            clock.cancel(key_counter[2])
+                        end
+                        -- Track View K1 + K2 + K3 arms recording
+                        ignore_k2_off = true
+                        scene:record_arm(true)
+                    else
+                        -- Track View K1 + K3 exits to song view, saving changes
+                        scratch_track:commit()
+                        active_page = 0
+                        fn.dirty_scene(true)
+                    end
                 elseif active_page == 0 then
                     -- Song View K1 + K3 enters track view
                     scratch_track:reset()
@@ -239,6 +249,7 @@ function long_press(n)
     if n == 1 then
         if active_page == 0 then
             -- Song View Long K1 enters menu
+            keys[1] = 0
             fn.playing(false)
             selecting = true
             textentry.enter(tracks.save, "song", "filename")
@@ -254,10 +265,12 @@ function long_press(n)
     elseif n == 2 then
         if active_page == 1 then
             scratch_track:cut()
+            ignore_k2_off = true
         end
     elseif n == 3 then
         if active_page == 1 then
             scratch_track:paste()
+            ignore_k3_off = true
         end
     end
 end
