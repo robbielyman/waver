@@ -1,7 +1,7 @@
 fn = {}
 
 function fn.init()
-    scene_dirty = true
+    scene_dirty = false
     screen_dirty = true
     location = 0
 end
